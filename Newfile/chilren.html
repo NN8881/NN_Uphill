@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrapvalidator.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/wysiwyg-editor.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/site_1.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/ztree.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/pager.css" rel="stylesheet" type="text/css" />
+    <script src="static/js/jquery.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrapvalidator.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.zh-cn.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg-editor.js" type="text/javascript"></script>
+    <script src="static/js/bootbox.min.js" type="text/javascript"></script>
+    <script src="static/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+    <script src="static/js/knockout-3.4.0.js" type="text/javascript"></script>
+    <script src="static/js/jquery.page.js" type="text/javascript"></script>
+    <script src="static/js/ajaxfileupload.js" type="text/javascript"></script>
+    <script src="static/js/ichart.1.2.1.min.js" type="text/javascript"></script>
+    <script src="static/js/compatibility.js" type="text/javascript"></script>
+    <script src="static/js/pdf.js" type="text/javascript"></script>
+    <script src="static/js/jquery.raty.js" type="text/javascript"></script>
+    <script src="static/js/8e00bcde04ed418e828769219ac89b28.js" type="text/javascript"></script>
+    <script src="static/js/globlejs.js" type="text/javascript"></script>
+    <script type="text/javascript" src="static/js/md5.js"></script>
+    <script type="text/javascript" src="static/js/base64.js"></script>
+    <script src="static/js/drawcanvas.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (typeof _userInfo.RoleType == 'undefined' && _userInfo.RoleType == "") {
+                window.location.href = _websiteName + "/Login";
+            } else {
+                if (_userInfo.UserName.indexOf("访客") != -1) {
+                    $("#loginUserName").html(
+                        '<img src="static/picture/user2.png" style="     margin-top: -3px; width: 10%;" />  ' +
+                        "专家登录");
+                } else {
+                    $("#loginUserName").html(
+                        '<img src="static/picture/user2.png" style="     margin-top: -3px; width: 10%;" />  ' +
+                        _userInfo.UserName);
+                }
+
+                //获取是否互联平台
+                $.ajax({
+                    type: 'post',
+                    url: _websiteName + '/ReportStudent/SUserManage/GetIsConnectPT',
+                    data: {},
+                    success: function(result) {
+                        if (result.RTNCode == 1) {
+                            $("#um").css("display", "none");
+                        }
+                    }
+                }); //结束
+            }
+            if (_userInfo._isSupportNationalVirtual == "1") {
+                $("#um").css("display", "none");
+            }
+
+        });
+
+        function isSignOut() {
+            bootbox.confirm({
+                buttons: {
+                    confirm: {
+                        label: '确认',
+                        className: 'btn btn-LightGreen'
+                    },
+                    cancel: {
+                        label: '取消',
+                        className: 'btn btn-LightGreen'
+                    }
+                },
+                message: '您确认登出系统吗？登出后您将跳转到登录页面。',
+                callback: function(result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'post',
+                            url: _websiteName + '/Login/LoginOut',
+                            data: {
+                                userId: _userInfo.UserID,
+                                Guid: _userInfo.Token
+                            },
+                            success: function(result) {
+                                if (result.RTNCode == '-5') {
+                                    bootbox.confirm("登录超时，请重新登录！", function() {
+                                        _userInfo.RoleType = "";
+                                        window.location.href = _websiteName + result
+                                            .Data;
+                                    });
+                                } else if (result.IsSuccess) {
+                                    bootbox.confirm("退出成功！", function() {
+                                        _userInfo.RoleType = "";
+                                        widow.location.href = _websiteName + result.Data;
+                                    });
+                                } else {
+                                    _userInfo.RoleType = "";
+                                    window.location.href = _websiteName + "/Login";
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function goIndex() {
+
+            // window.location.href = _websiteName + "/Login/Index";
+            window.history.go(-1)
+        }
+    </script>
+    <style type="text/css">
+        .left-top {
+            list-style: none;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 5px;
+        }
+        
+        .left-top span {
+            font-size: 16px;
+        }
+        
+        a:hover,
+        a:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        /*图*/
+        
+        .left-box {
+            width: 52%;
+            height: 0;
+            padding-top: 26.3157%;
+            position: absolute;
+            bottom: 0;
+            left: 3%;
+            margin: auto 0;
+        }
+        
+        .foot {
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!--顶部 class="glyphicon glyphicon-user"-->
+    <div class="row" style="height: 63px;">
+        <div class="topBanner" style="width: 100%;">
+            <div class="row head" style="height: 64px;width:100%;background:url(static/images/tbbj.png) no-repeat;background-size:cover;position:relative;">
+
+                <div style="position:absolute;top:64px;">
+                    <img src="static/picture/logo.png" style="position: absolute; bottom: 10px; left: 25px; width: 540px; " />
+                    <!--  <img src="static/picture/scdx.png" style="bottom: 15px; position: absolute; left: 85px; width: 100px; " />
+                    <img src="static/picture/qgkx.png" style="position: absolute; bottom: 13px; left: 195px; width: 160px;" />
+                    <img src="static/picture/sg.png" style="position: absolute; bottom: 2px; left: 360px; " />
+                    <img src="static/picture/zgqj.png" style="position: absolute; bottom: 12px; left: 390px; width: 240px;" /> -->
+                </div>
+
+                <div id="rightDiv" style="position: absolute; right: 44px; margin-right: 21px; color: white; top: 25px; ">
+                    <ul style="margin-top: -4px;">
+
+                        <li id="getUserName" style="width: 147px; margin-right: -146px; float: left;">
+                            <a id="loginUserName" href="#" style=" position: relative;font-size: 18px;">
+
+                            </a>
+                        </li>
+                        <li id="goIndex" style=" width: 100px; margin-left: 20px; float: left;">
+                            <a href="#" onclick="goIndex()" style="font-size:14px">
+                                <!-- <img src="static/picture/goindex.png" style=" width: 19%; margin-top: -7px;" /> -->
+                                <button style="border: 2px solid #fff;border-radius: 12px; color: #fff; background-color: #fff;height: 28px;width: 90px;">
+                                    <!-- <img src="static/picture/goindex.png"  /> -->
+                                    <i style="font-style: normal;font-weight: 400;font-size: 14px; color: #4880e3;">返回首页</i> 
+                                </button>
+                            </a>
+                        </li>
+                        <li id="signOut" style=" margin-left: 20px; float: left;">
+                            <a href="#" onclick="isSignOut()">
+                                <!-- <img src="static/picture/signoutimg.png" style=" width: 93%;margin-top:-3px;" /> -->
+                                <button style="border: 2px solid #fff;border-radius: 12px; color: #fff; background-color: #fff;height: 28px;width: 50px;">
+                                    <i style="font-style: normal;font-weight: 400;font-size: 14px; color: #4880e3;">退出</i> 
+                                </button>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" style="width:100%">
+
+        <div class="row head-img">
+            <img src="static/picture/headbj1.jpg" style=" position: relative; z-index: -9999; height:100%; width: 100%;" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 5px;">
+
+        <style type="text/css">
+            .imglist li a img {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .imglist li {
+                border: none;
+                width: 280px;
+                height: 21px;
+                float: left;
+                cursor: pointer;
+                list-style: none;
+                margin: 5px 5px;
+            }
+            
+            .RecordBg {
+                background: url(static/images/recordbg.png) center left no-repeat;
+                width: 30px;
+                height: 30px;
+                border: 0 solid white;
+                background-size: 30px 30px;
+            }
+            
+            .RecordPlayingBg {
+                background: url(static/images/recordplayingbg.gif) center left no-repeat;
+                width: 30px;
+                height: 30px;
+                border: 0 solid white;
+                background-size: 30px 30px;
+            }
+            
+            #conframe {
+                display: none;
+            }
+        </style>
+        <input type="hidden" value="1" id="TopNavID" />
+        <input type="hidden" id="SourceName" />
+        <input type="hidden" id="SourceUrl" />
+
+        <script type="text/javascript">
+            //生成录音按钮
+            var ip;
+            var port;
+            var test = window.location.host;
+            var strs = test.split(":");
+            if (strs.length >= 1) {
+                ip = strs[0];
+                port = strs[1]
+                var str = "/" + _CurrentLabID.LabID + "/" + ip + "/" + port + "/" + _userInfo.UserID + "/" + "op" +
+                    "/" + "3";
+                var base = new Base64();
+                var result = base.encode(str);
+                console.log(result);
+                $("#btnStart").attr("href", "Lab://" + result + "/");
+            }
+
+            function funStart(button) {
+                btnStart.disabled = true;
+            }
+        </script>
+        <div class="renderbodyBasicMy">
+            <div class="row topNavUl" style="display:none">
+
+                <a name="defaultpos"></a>
+                <ul class="topNav bs-docs-topnav affix-top padding10" id="source_ul">
+                    <li class="defaultli" id="first_li">
+                        <div class="row">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row contentBodyMy" style="width:100%;text-align:center;">
+
+                <style>
+                    #content span label {
+                        font-weight: 500;
+                        text-indent: 2em;
+                    }
+                    
+                    #content img {
+                        width: 93%;
+                        position: relative;
+                        margin-top: 15px;
+                    }
+                    
+                    .textContainer {
+                        font-size: 16px;
+                        /*text-indent: 32px;*/
+                        line-height: 2;
+                        text-align: justify;
+                        text-justify: inter-ideograph;
+                    }
+                    
+                    .textContainer2 {
+                        font-size: 16px;
+                        text-indent: 32px;
+                        line-height: 2;
+                        text-align: justify;
+                        text-justify: inter-ideograph;
+                    }
+                    
+                    .contentTitle {
+                        text-align: left;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin: 7px 0;
+                    }
+                    
+                    .topTitle {
+                        text-align: left;
+                        display: inline-block;
+                        margin-left: 10px;
+                        height: 25px;
+                    }
+                    
+                    .outCircle {
+                        background: #477fe3;
+                        border-radius: 50%;
+                        width: 20px;
+                        height: 20px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-bottom: 4px;
+                    }
+                    
+                    .inCircle {
+                        height: 12px;
+                        width: 12px;
+                        border-radius: 50%;
+                        background: white;
+                        margin: 4px;
+                    }
+                    
+                    .circleContainer {
+                        text-align: left;
+                        height: 25px;
+                        color: #477fe3;
+                        font-size: 22px;
+                        margin-bottom: 20px;
+                        font-weight: 600;
+                    }
+                    
+                    .btnBeforeTest {
+                        width: 150px;
+                        height: 35px;
+                        font-size: 20px;
+                        border-radius: 17.5px;
+                        color: white;
+                        background: #477fe3;
+                        border: none;
+                        margin-top: 30px;
+                        margin-bottom: 50px;
+                    }
+                    
+                    .head-img {
+                        height: 200px;
+                    }
+                    
+                    .sub {
+                        vertical-align: sub;
+                        font-size: 13px;
+                        font-weight: 400;
+                    }
+                    
+                    .super {
+                        vertical-align: super;
+                        font-size: 13px;
+                        font-weight: 400;
+                    }
+                    
+                    .textContainerNoIndent {
+                        text-align: left;
+                        font-size: 16px;
+                        line-height: 2;
+                    }
+                    
+                    .sybgBtn {
+                        margin-right: 10px;
+                        width: 100px;
+                        font-size: 18px;
+                        color: white;
+                        background: #4880E3;
+                        border: none;
+                        height: 33px;
+                        margin-top: 11px;
+                        margin-bottom: 60px;
+                    }
+                    
+                    .sybgBtn:hover {
+                        background: #1f5f9c;
+                    }
+                    
+                    #disdiv img {
+                        width: 4%;
+                    }
+                    
+                    #disdiv,
+                    #userlist {
+                        text-align: left;
+                    }
+                    
+                    #disdiv {
+                        margin-left: 10px;
+                    }
+                    
+                    #userlist img {
+                        width: 3%;
+                    }
+                    
+                    .wysiwyg-container {
+                        text-align: left;
+                    }
+                    
+                    .wysiwyg-toolbar {
+                        display: none;
+                    }
+                    
+                    #userlist {
+                        display: none;
+                    }
+                    
+                    .renderbodyBasicPC {
+                        -moz-box-shadow: 0px 0px 0px 0px #666;
+                        box-shadow: 0px 0px 0px 0px #666;
+                        width: 100%;
+                    }
+                    
+                    #more {
+                        color: #4880E3;
+                    }
+                    
+                    .wysiwyg-wrapper {
+                        height: 85px;
+                    }
+                    
+                    hr {
+                        margin-bottom: 30px;
+                    }
+                    
+                    .kczlkContent {
+                        font-size: 16px;
+                        padding-left: 1em;
+                    }
+                    
+                    .kczlkContent2 {
+                        font-size: 16px;
+                        padding-left: 2.1em;
+                    }
+                    
+                    .kczlkContent3 {
+                        font-size: 16px;
+                        padding-left: 2.1em;
+                    }
+                    
+                    #djcy {
+                        width: 100px;
+                        height: 100px;
+                        border: 1px solid red;
+                        animation: myfirst 3s linear infinite;
+                        -moz-animation: myfirst 3s linear infinite;
+                        /* Firefox */
+                        -webkit-animation: myfirst 3s linear infinite;
+                        /* Safari and Chrome */
+                        -o-animation: myfirst 3s linear infinite;
+                        /* Opera */
+                    }
+                    
+                    @keyframes myfirst {
+                        0% {
+                            border: 1px solid #4880E3;
+                        }
+                        25% {
+                            border: 1px solid #80DAFF;
+                        }
+                        50% {
+                            border: 1px solid #4880E3;
+                        }
+                        100% {
+                            border: 1px solid #80DAFF;
+                        }
+                    }
+                    
+                    @-moz-keyframes myfirst
+                    /* Firefox */
+                    
+                    {
+                        0% {
+                            border: 1px solid #4880E3;
+                        }
+                        25% {
+                            border: 1px solid #80DAFF;
+                        }
+                        50% {
+                            border: 1px solid #4880E3;
+                        }
+                        100% {
+                            border: 1px solid #80DAFF;
+                        }
+                    }
+                    
+                    @-webkit-keyframes myfirst
+                    /* Safari and Chrome */
+                    
+                    {
+                        0% {
+                            border: 1px solid #4880E3;
+                        }
+                        25% {
+                            border: 1px solid #80DAFF;
+                        }
+                        50% {
+                            border: 1px solid #4880E3;
+                        }
+                        100% {
+                            border: 1px solid #80DAFF;
+                        }
+                    }
+                    
+                    @-o-keyframes myfirst
+                    /* Opera */
+                    
+                    {
+                        0% {
+                            border: 1px solid #4880E3;
+                        }
+                        25% {
+                            border: 1px solid #80DAFF;
+                        }
+                        50% {
+                            border: 1px solid #4880E3;
+                        }
+                        100% {
+                            border: 1px solid #80DAFF;
+                        }
+                    }
+                    
+                    #djcyS {
+                        width: 100px;
+                        height: 100px;
+                        animation: myfirst 5s linear infinite;
+                        -moz-animation: myfirst 5s linear infinite;
+                        /* Firefox */
+                        -webkit-animation: myfirst 5s linear infinite;
+                        /* Safari and Chrome */
+                        -o-animation: myfirst 5s linear infinite;
+                        /* Opera */
+                    }
+                    
+                    @keyframes myfirst {
+                        0% {
+                            color: #4880E3;
+                        }
+                        25% {
+                            color: #80DAFF;
+                        }
+                        50% {
+                            color: #4880E3;
+                        }
+                        100% {
+                            color: #80DAFF;
+                        }
+                    }
+                    
+                    @-moz-keyframes myfirst
+                    /* Firefox */
+                    
+                    {
+                        0% {
+                            color: #4880E3;
+                        }
+                        25% {
+                            color: #80DAFF;
+                        }
+                        50% {
+                            color: #4880E3;
+                        }
+                        100% {
+                            color: #80DAFF;
+                        }
+                    }
+                    
+                    @-webkit-keyframes myfirst
+                    /* Safari and Chrome */
+                    
+                    {
+                        0% {
+                            color: #4880E3;
+                        }
+                        25% {
+                            color: #80DAFF;
+                        }
+                        50% {
+                            color: #4880E3;
+                        }
+                        100% {
+                            color: #80DAFF;
+                        }
+                    }
+                    
+                    @-o-keyframes myfirst
+                    /* Opera */
+                    
+                    {
+                        0% {
+                            color: #4880E3;
+                        }
+                        25% {
+                            color: #80DAFF;
+                        }
+                        50% {
+                            color: #4880E3;
+                        }
+                        100% {
+                            color: #80DAFF;
+                        }
+                    }
+                    
+                    .kqyxContent {
+                        font-size: 16px;
+                        padding-left: 2.3em;
+                    }
+                    
+                    .syyqContent {
+                        font-size: 16px;
+                        padding-left: 3em;
+                    }
+                    
+                    .btn-LightGreen {
+                        width: 71px;
+                        height: 31px;
+                    }
+                    
+                    #disdiv li:nth-child(1) {
+                        margin-top: 31px;
+                    }
+                    
+                    .kqyxContentP {
+                        position: relative;
+                        top: -32px;
+                        padding-left: 2.2em;
+                        font-size: 16px;
+                    }
+                    
+                    .kqyxContentP-img-2 {
+                        margin-top: -42px;
+                    }
+                    
+                    .xuhao {
+                        display: inline-block;
+                        font-size: 16px;
+                        float: left;
+                        padding-left: 0.3em;
+                    }
+                    
+                    .neirong {
+                        display: table-cell;
+                    }
+                </style>
+
+                <!-- 课前预习界面 -->
+                <div class="row" id="kqyx" style="width: 1200px; margin: 0 auto; margin-bottom: 20px;
+display: none; -webkit-box-shadow: #b8b8b8 0 0 1rem; -moz-box-shadow: #b8b8b8 0 0 1rem;
+box-shadow: #b8b8b8 0 0 1rem; margin-top: 13px; border-radius: 5px;">
+                    <img src="static/picture/kqyy.png" style="margin-top: 50px; width: 52%;" />
+                    <div class="modal-body" style="padding: 12px 59px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto;
+        margin-right: auto;">
+                            <tr>
+                                <td>
+                                    <div id="content" style="">
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验教学目标
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="textContainer">
+                                                    <div>
+                                                        <span style=" font-size:16px;color:white">1</span>
+                                                    </div>
+
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;《非织造学》是纺织工程专业学生的专业基础性课程，熔喷非织造布生产是《非织造学》的核心教学内容之一。熔喷非织造产品应用非常广泛，包含医疗卫生、建筑、汽车内装饰材料以及电池隔膜等众多领域。在疫情防控期间，熔喷非织造布是医用口罩和防护服的核心原材料，具有重大的市场需求。作为纺织工程专业学生更应当学好专业知识，树立防疫安全社会责任感和担当意识，以技术报效祖国。通过课程实验有利于培养学生强烈的质量意识、创新精神和精益求精的工匠精神，培养学生分析问题与解决生产过程中实际问题的能力。本项目具体实验教学目标如下：
+                                                    </p>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="textContainer" style="margin-top: -20px;">
+                                                    <div>
+                                                        <span style=" font-size:16px;font-weight: 600;">1.</span>
+                                                    </div>
+                                                    <p class="kqyxContentP" style=" font-size:16px;font-weight: 600;">熔喷工艺设备3D虚拟仿真，使学生掌握其生产设备和工作原理</p>
+                                                    <br>
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;熔喷非织造材料生产工艺是聚合物挤压成网法的一种，起源于20世纪50年代初。熔喷非织造布是一种由定向或随机排列的超细纤维构成的非织造材料，具有纤维细、纤维网孔径小、孔隙率高等特点，可有效地滤除空气中粉尘、细菌等有害物质，保障使用者健康。熔喷工艺生产线的设备主要包括上料机、螺杆挤出机、过滤装置、计量泵、纺丝组件、热风系统、接收装置、卷绕装置等。由于这些生产设备都是大型产业化设备，价格贵，运行条件要求高，涉及到高温、高压气流等危险环境，无法在校内实验室展示。通过熔喷工艺设备3D虚拟仿真实验，使学生掌握典型熔喷工艺原理，提高学生的理论知识水平。通过核心关键设备的拆装，锻炼学生动手操作能力，模拟实际生产设备，培养学生分析问题与解决生产过程中实际问题的能力。创新源于实践，在仿真教学模式下，学生在动手生产的同时可充分发挥个人的创造力来解决问题，从而培养学生的实践应用能力和创新能力。
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="textContainer" style="margin-top: -20px;">
+                                                    <div>
+                                                        <span style=" font-size:16px;font-weight: 600;">2.</span>
+                                                    </div>
+                                                    <p class="kqyxContentP" style=" font-size:16px;font-weight: 600;">
+                                                        典型聚丙烯非织造布生产3D虚拟仿真，使学生掌握其生产工艺流程
+                                                    </p>
+                                                    <br>
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;聚丙烯（PP）是熔喷工艺应用最多的一种聚合物原料，具有密度小、结晶度高、熔体流动性好、耐酸碱、无需干燥、工艺流程短等优点。PP熔喷非织造布在非织造布中所占比例最大，主要用作具有较高要求的气体和液体过滤材料。随着全球新冠肺炎疫情的蔓延，PP熔喷非织造布作为重要防疫物质（口罩、防护服等）的核心滤材，市场需求量急剧增加。本项目PP熔喷非织造布生产线主要包括上料、熔体过滤、熔体喷出、热空气牵伸、接收成网、卷绕切边等工序。通过3D虚拟仿真实验教学，要求学生学习并掌握：（1）原料选配、上料和计量过程控制；（2）聚合物熔体喷出、热气流牵伸成纤原理；（3）纤维接收成网与固结工艺原理；（4）卷绕切边工艺调控；（5）边料、废料处理与回收的方法。使学生从生产全局掌握PP非织造布生产工艺流程，培养学生实操能力，为训练学生解决复杂工程问题提供强有力的实践基础。
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="textContainer" style="margin-top: -20px;">
+                                                    <div>
+                                                        <span style=" font-size:16px;font-weight: 600;">3.</span>
+                                                    </div>
+                                                    <p class="kqyxContentP" style=" font-size:16px;font-weight: 600;">
+                                                        生产车间“真实”再现，培养学生的工程素养与车间生产操作能力
+                                                    </p>
+                                                    <br>
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;基于真实企业熔喷非织造布生产线，采用计算机3D仿真技术，构建本项目熔喷非织造布生产工艺实验模型。通过仿真平台提前模拟由于工人误操作或设备故障等原因出现气流温度过高或压力过大等生产问题，通过设备报警提示，提高学生的生产安全性，起到提前警示教育的作用。通过虚拟仿真系统，进行生产线岗位轮换，学生可以综合应用所学知识开展车间生产操作和实践活动，这有利于培养学生的工程实践操作和生产全局意识，培养团队协作精神，并强化沟通交流能力。根据企业真实车间设计的场景，学生可通过厂区漫游了解整个车间的设备布局和生产管理理念，通过切身体验更有利于快速掌握理论知识内容，培养学生的工程素养和大局观。通过实践能力的强化，希望学生毕业后能够胜任企业生产、管理、经营等第一线工作，用所学理论知识解决生产实际问题。
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="textContainer" style="margin-top: -20px;">
+                                                    <div>
+                                                        <span style=" font-size:16px;font-weight: 600;">4.</span>
+                                                    </div>
+                                                    <p class="kqyxContentP" style=" font-size:16px;font-weight: 600;">
+                                                        “沉浸式”实景教育，满足学生生产实习的需求
+                                                    </p>
+                                                    <br>
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;实验实践教学是培养应用型工程技术人才的重要教学环节。纺织工程是一门实践性很强的专业，生产实习是该专业本科教育中必修的实践课程。但是由于纺织企业的生产特殊性，学生即使进入企业实习，也不可能进入企业生产车间一线对大型产业化生产设备进行具体实践操作。生产实习等实践教学大多停留在车间和装备等走马观花式的参观层面，无法让学生参与到具体生产过程中，切身地体会到真实的产品设计与工艺流程调控环节，难以激发学生的积极性和创造性。在校内实验实践教学过程中，由于受课时和实验室基础条件的限制，实验教学也主要集中在验证性实验，无法给学生展示或操作当前企业的大型产业化设备，不能满足学生生产实习实训的需求，因此建立典型的熔喷非织造布生产车间虚拟仿真系统十分必要。通过虚拟仿真实践教学环节，有利于理论联系实际，满足学生生产实习需求，提高学生的动手能力、分析问题和解决问题的能力、独立思考的能力以及创新能力，有利于全面提升我校纺织工程专业应用型人才培养的质量，为我省纺织行业的发展注入更加优质的人才资源。
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验原理
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="textContainer">
+                                                    <div>
+                                                        <span style=" font-size:16px">(1)</span>
+                                                    </div>
+                                                    <p class="kqyxContentP">
+                                                        &emsp;&emsp;熔喷非织造布生产工艺原理是将聚合物熔体从纺丝箱喷丝板的喷丝孔中挤出，形成熔体细流，加热的牵伸空气从纺丝箱的喷丝孔两侧风道亦称气缝中高速吹出，对聚合物熔体细流进行拉伸。冷却空气在纺丝箱下方一定位置从两侧补入，使纤维冷却结晶。在接收装置的成网帘下方设真空抽吸装置，使经过高速气流拉伸成形的超细纤维均匀地收集在接收装置的成网帘上，依靠自身余热粘合或其它加固方法成为熔喷非织造材料。图1所示为典型的熔喷非织造布生产工艺流程图。
+                                                    </p>
+                                                </div>
+                                                <div style="text-align: center; position: relative; bottom: 20px; ">
+                                                    <img src="static/picture/experimental_principle_1.jpg" style="width: 55%; margin-bottom: 22px;" />
+                                                    <br />
+                                                    <span style="font-size: 14px;">图1典型的熔喷非织造布生产工艺流程图</span>
+                                                </div>
+                                            </li>
+                                            <br />
+                                            <br />
+                                            <li>
+                                                <div class="textContainer kqyxContentP-img-2">
+                                                    <br> &emsp;&emsp;原料的合理选配是决定生产线性能指标的第一个先决条件。聚合物熔体纺丝前，主要的工艺设备包括：螺杆挤压机、熔体过滤器、熔体管道、计量泵。
+                                                    </br>
+                                                    &emsp;&emsp;纺丝箱的主要功能是分配熔体、提供符合纺丝工艺要求的纺丝压力和纺丝温度，并作为纺丝组件安装的载体
+                                                    <strong><br> &emsp;&emsp;纺丝组件是熔喷工艺的核心部件，纺丝组件主要包括金属过滤网、分配板、喷丝板、刀板和堵头等部件。纺丝组件的作用是进一步过滤熔体使其混合均匀，同时具有纺丝和牵伸功能。纺丝组件结构如图2所示。</strong>>
+                                                    </p>
+                                                </div>
+                                                <div style="text-align: center; position: relative; bottom: 20px; ">
+                                                    <img src="static/picture/experimental_principle_2.png" style="width: 418px; height: 280px; margin-bottom: 22px;" />
+                                                    <br />
+                                                    <span style="font-size: 14px;">图2 熔喷法纺丝组件的结构图</span>
+                                                </div>
+                                            </li>
+                                            <br />
+                                            <br />
+                                            <li>
+                                                <div class="textContainer">
+                                                    <div>
+                                                        <span style=" font-size:16px">如图2所示：<br>
+                                        <1>熔体进入方向：是熔体从纺丝箱进人喷丝板的通道。<br>
+                                        <2>喷丝板的尖端：喷丝板呈倒山字形，所有的喷丝孔布置在尖端，并排列成一排。<br>
+                                    <3>气刀：每个组件有两只气刀，对称分布在喷丝孔的两侧，气刀的斜面与喷丝板的斜面之间的间隙构成了牵伸气流通道，简称为气隙。气隙的宽度会直接影响牵伸气流的压力和流量。<br>
+                                        <4>锥缩：指喷丝板锥形尖端缩入气刀底平面的距离，一般为0.7-0.9mm。<br>
+                                        知识点：共10个<br>
+                                        &emsp;&emsp;<1>.掌握纺丝组件的构造和功能，学会拆卸和安装纺丝组件。<br>
+                                        &emsp;&emsp;<2>.掌握热风装置的功能，学会设置牵伸热风气流的速度和温度。<br>
+                                        &emsp;&emsp;<3>.掌握计量泵和熔体过滤器的功能，学会设置计量泵和熔体过滤器的温度。<br>
+                                        &emsp;&emsp;<4>.掌握纺丝箱体和熔体管道的功能，学会设置纺丝箱体和熔体管道的温度。<br>
+                                        &emsp;&emsp;<5>.掌握螺杆挤压机的功能以及螺杆的三段式结构，学会设置三段温度。<br>
+                                        &emsp;&emsp;<6>.掌握冷风装置的功能，学会设置冷风的温度。<br>
+                                        &emsp;&emsp;<7>.掌握纺丝主要设备，包括热风装置、计量泵、熔体过滤器、纺丝箱体、熔体管道、螺杆挤压机、冷风装置开启工作的先后顺序以及温度设置差异。<br>
+                                        &emsp;&emsp;<8>.学会选配纺丝主料和辅料，掌握原料的输送方式。<br>
+                                        &emsp;&emsp;<9>.掌握成网机的功能，学会调节喷丝板与成网机之间的距离。<br>
+                                        &emsp;&emsp;<10>.通过检测熔喷非织造布的过滤效率，理解聚合物原料选配与纺丝工艺参数对熔喷非织造布过滤效率的显著影响。<br>
+                                        <span style=" font-size:16px">(2)</span>
+                                        &emsp;核心要素仿真设计（对系统或对象的仿真模型体现的客观结构、功能及其运动规律的实验场景进行如实描述，限500字以内）
+                                        <br> &emsp;&emsp;本虚拟仿真实验教学系统是以真实生产车间为蓝本搭建，展示了真实企业聚丙烯熔喷非织造布生产车间的整体布局，涵盖了生产线上的全部主要设备，包括上料机、螺杆挤出机、熔体管道、熔体过滤器、计量泵、纺丝箱、纺丝组件、热风系统、冷风系统、接收装置、抽吸风装置和卷绕装置，设备仿真模型是按照企业真实设备的客观结构和功能进行仿制，具有科学性、推演性和交互性，满足真实实验的虚拟仿真孪生环境。
+                                        <br> &emsp;&emsp;实验教学内容设计思路也与实际生产流程相一致，学生通过综合设计实验方案，依次完成纺丝组件安装、设备参数设置以及原料选配等生产工序，通过观察纺丝实验现象，检测并分析实验结果，进而掌握熔喷工艺原理的专业基础知识，整个实验过程有机地融合了理论知识内容，体现了探究知识和解决问题。纺丝实验现象的设计也与学生实验方案的设计相匹配，符合实际生产规律，反应客观事实。
+                                        学生通过完成本实验教学系统的学习内容，可以从生产全局掌握聚丙烯熔喷非织造布的生产工艺流程，有利于培养科学实验操作的基本技能，有效地提高理论知识水平，增强生产安全意识，培养实操能力、创新能力、分析问题和解决问题的能力。</span>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验仪器
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">1.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            纺丝箱
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;纺丝箱的主要功能是分配熔体、提供符合纺丝工艺要求的纺丝压力和纺丝温度，并作为纺丝组件安装的载体。纺丝组件是熔喷工艺的核心部件，纺丝组件主要包括金属过滤网、分配板、喷丝板、刀板和堵头等部件。纺丝组件的作用是进一步过滤熔体使其混合均匀，同时具有纺丝和牵伸功能。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment1.png" style="width: 23%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">2.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            螺杆挤出机
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;螺杆挤出机主要由螺杆与套筒、驱动装置、加热和冷却装置、电气控制系统等部分组成，其功能是将聚合物原料熔融、塑化，输送加压和混合均化，向纺丝系统提供压力稳定、塑化均匀的聚合物熔体。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment14.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">3.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            螺杆
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;螺杆挤出机的螺杆呈现三段式结构，包含进料段、压缩段（也称塑化段、熔融段）和计量段（也称均化段）。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment15.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">4.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            计量泵
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;计量泵是对熔体进行输送、加压、计量的设备。计量泵能够向纺丝箱体提供压力稳定、流量恒定的纺丝熔体。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment17.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">5.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            熔体过滤器
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;熔体过滤器的功能是利用过滤装置（滤网）将熔体中的杂质滤除，为正常纺丝提供干净的熔体，保护系统中计量泵的安全，延长纺丝组件的使用周期。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment16.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">6.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            成网机
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;纺丝系统生成的纤维经过牵伸后随气流高速落在接收成网机的网面上，依靠自身的余热粘结形成均匀的纤网。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment2.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">7.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            卷绕装置
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;纤网的卷绕设备。由于非织造布生产线是一个高效率的连续运行系统，因此，收卷机需具备在不停机的状态进行自动换卷的功能。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment18.png" style="width: 32%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">8.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            料仓
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;储存原料的装置。聚丙烯是最常用、用量最大、用途最广的一种原料，也是本实验的主要原料。本实验选取的辅料包括：驻极母粒和色母粒。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment12.png" style="width: 32%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">9.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            真空吸料机
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;自动加料装置。本实验采用真空负压吸送式的输送方式向系统提供生产过程所需要的主料和辅料，料斗不敞开，可连续加料和输送。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment13.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">10.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            电驻机
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment11.png" style="width: 27%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">11.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            成网机控制箱
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;控制成网机升降运动的装置。在生产中，需要改变喷丝板与成网机之间的距离来控制非织造布的质量。常用的调节方法之一是成网机作升降运动，以此调控喷丝板与成网机之间的距离。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment10.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">12.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            口罩滤材过滤效率测试仪
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;测试熔喷非织造布过滤效率的仪器。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment3.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">13.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            口罩滤材通气阻力及压力差测试仪
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;测试熔喷非织造布过滤阻力的仪器。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment7.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">14.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            台式扫描电子显微镜
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;观测熔喷非织造布形貌结构的仪器。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment5.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">15.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            毛细管流动孔径分析仪
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;测试熔喷非织造布孔径大小、孔径分布的仪器。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment4.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">16.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            傅里叶红外光谱分析仪
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;测试熔喷非织造布化学结构的仪器。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment6.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">17.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            空压机
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;实验仪器的配套设备。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment8.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                                <li>
+                                                    <div class="textContainer">
+                                                        <div>
+                                                            <span style=" font-size:16px">18.</span>
+                                                        </div>
+                                                        <p class="kqyxContentP">
+                                                            氮气瓶
+                                                        </p>
+                                                        <p class="kqyxContentP">
+                                                            &emsp;&emsp;实验仪器的配套气瓶。
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center">
+                                                        <img src="static/picture/experimental_equipment9.png" style="width: 30%; margin-bottom: 22px;" />
+                                                    </div>
+                                                </li>
+                                                <br />
+                                            </ul>
+                                        </div>
+                                        <div class="circleContainer" style="margin-top: 11px;">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            课前测验
+                                        </div>
+
+
+
+                                        <div class="textContainer" style="text-indent:28px;padding-left:0px;">
+
+                                            请点击以下链接进入课前测验，完成课前测验后方可进入实验。
+                                        </div>
+                                        <div style="margin-top: 20px; margin-bottom: 30px;    margin-left: 28px;">
+                                            <div style="text-align: center">
+                                                <a href="#" onclick="kqcyt()">
+                                                    <div id="djcy" style="border: 1px solid; width: 30%; height: 56px; border: 1px solid;">
+                                                        <span id="djcyS" style="color: #4880E3; font-size: 24px; position: relative; top: 10px;">
+                                        点击此处进入课前测验
+                                    </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- 实验指导界面 -->
+                <div class="row" id="kqcy" style="width: 1200px; margin: 0 auto; margin-bottom: 20px;
+display: none; -webkit-box-shadow: #b8b8b8 0 0 1rem; -moz-box-shadow: #b8b8b8 0 0 1rem;
+box-shadow: #b8b8b8 0 0 1rem; margin-top: 13px; border-radius: 5px;">
+                    <img src="static/picture/syzd11.png" style="margin-top: 50px; width: 52%;" />
+                    <div class="modal-body" style="padding: 12px 59px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto;
+        margin-right: auto;">
+                            <tr>
+                                <td>
+                                    <div id="content" style="">
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验内容
+                                            <br>
+                                        </div>
+                                        <div class="textContainer" style="text-indent:32px;">
+                                            本虚拟仿真实验教学系统包括：学习模式和考核模式。学习模式中提供了详细的操作流程，学生可对照进行操作练习。学习模式包含实验前准备、设备仿真、工艺与生产操作仿真、厂区漫游四个部分内容。考核模式为操作考核，除了包含上述四个部分内容以外，还包括在线考试。学生进入系统后可以自行选择相应的模式进行学习。
+                                        </div>
+                                        <div style="text-align: center">
+                                            <img src="static/picture/experimental-guidance1.jpg" style="width: 693px; margin-bottom: 22px; margin-top: 30px;" />
+                                            <!-- <img src="picture/syzdimg1.png" style="width: 54%; margin-bottom: 22px; margin-top: 30px;" /> -->
+                                            <br />
+                                        </div>
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验指导
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="contentTitle">
+                                                    1. 实验前准备
+                                                </div>
+                                                <div class="textContainer" style="text-indent:32px;">
+                                                    学生打开虚拟仿真实验教学系统，选择好相应的模式后进入厂区，首先进入车间更衣室，进行车间工作服更换，并阅读车间安全管理规则制度，完成实验前准备工作。
+                                                </div>
+                                                <br>
+                                                <div style="text-align: center">
+                                                    <img src="static/picture/experimental-guidance2.jpg" style="width: 693px;" />
+                                                    <br />
+                                                </div>
+                                            </li>
+                                            <br />
+                                            <br />
+                                            <li>
+                                                <br>
+                                                <div class="contentTitle">
+                                                    2. 设备仿真
+                                                </div>
+                                                <div class="textContainer" style="text-indent:32px;">
+                                                    学生完成实验前准备工作后，即可进入生产主车间，该车间展示了聚丙烯熔喷非织造布生产线上的主要设备和部件，学生可以通过漫游车间多角度观察设备运作情况，同时提供设备主要功能以及日常运行注意事项等文字性辅助描述，最后使用3D仿真技术对生产线上主要关键设备纺丝箱中的纺丝组件进行拆卸、组装等模拟与展示，最大程度真实展示纺丝组件的构造与工作原理，提高学生对理论知识内容的理解，为教学提供可视化的深度解析。
+                                                </div>
+                                                <br>
+                                                <div style="text-align: center">
+                                                    <img src="static/picture/experimental-guidance3.png" style="width: 693px;" />
+                                                    <br />
+                                                </div>
+                                            </li>
+                                            <br />
+                                            <br />
+                                            <li>
+                                                <div class="contentTitle">
+                                                    3. 工艺与生产操作仿真
+                                                </div>
+                                                <div class="textContainer" style="text-indent:32px;">
+                                                    工艺与生产操作仿真是以具体的车间生产流程为主线，展现了聚丙烯熔喷非织造布生产线的整体布局，模拟了生产线中主要设备参数的设置及工艺流程操作。学生通过车间漫游可进行不同视角场景切换，完成全三维高度沉浸式立体交互体验。设计的生产操作流程与真实企业实际生产流程相匹配，重点体现了生产安全规范的操作逻辑顺序和常见操作错误模拟。学生点击某一工艺步骤即可进入该工艺动态展示进程，展示内容主要包括该段工艺设备的主要参数调控、关键指标、对应的理论知识点等，通过详细的工序流程和相应的实验动态展示，提高学习的可观性，增强学生对各工艺流程的直观认识。
+                                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同时，使用3D虚拟仿真技术对设备内部动态运动过程进行可视化操作，如：螺杆挤出机和纺丝组件中聚合物熔体的流动与分配进行模拟与展示，最大程度真实展示设备的工作原理，为教学提供可视化的深度解析。通过对生产工艺路线的全程交互性操作，有利于培养学生分析和解决生产问题的能力。
+                                                </div>
+                                                <br>
+                                                <div style="text-align: center">
+                                                    <img src="static/picture/experimental-guidance4.jpg" style="width: 693px;" />
+                                                    <br />
+                                                    <img src="static/picture/experimental-guidance5.jpg" style="width: 693px;" />
+                                                </div>
+                                            </li>
+                                            <br />
+                                            <br />
+                                            <li>
+                                                <div class="contentTitle">
+                                                    4. 厂区漫游
+                                                </div>
+                                                <div class="textContainer2">
+                                                    学生进入实验教学系统，即是进入虚拟熔喷非织造布生产工厂，可实现厂区漫游，厂区全局布置包含：车间更衣室、生产车间、产品检测实验室、原料贮存仓库、成品贮存仓库、厂区内基础设施、卫生绿化、三废处理模型、厂区消防安全布置等。通过厂区漫游帮助学生认识熔喷非织造布厂区布局规范，学生可以通过直接点击房间名称的方式进入相应的车间，如：车间更衣室、生产主车间、产品检测实验室，直观地看到每个房间内部的布置和布局，了解生产工作环境以及核心设备的模型。
+                                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过虚拟仿真模拟实际厂区的布置与布局、车间设备和生产线等环境，达到比拟现场实习实训的效果。学生在进行模拟全厂漫游学习时应至少可以进入参观。车间漫游的重点是展示生产线上的代表性设备、设备布局、过程管道、物料流程、仪表控制等。
+                                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全景模拟生产实习实训参观、可随时进行设备、工艺原理等知识点的学习。主要设备及其配件、管路等系统单元，可在漫游过程中动态在线查看相关属性（支持OFFICE文档、PDF文档、CAD文件、视频等常见数据格式）。
+                                                </div>
+                                                <div style="text-align: center">
+                                                    <img src="static/picture/experimental-guidance4.png" style="width: 693px;" />
+                                                    <br />
+                                                    <br>
+                                                </div>
+                                            </li>
+                                            <!--  -->
+                                            <!--  -->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- 实验报告界面 -->
+                <!-- 对应项目特色 -->
+                <div class="row" id="sybg" style="width: 1200px; margin: 0 auto; margin-bottom: 20px;
+    display: none; -webkit-box-shadow: #b8b8b8 0 0 1rem; -moz-box-shadow: #b8b8b8 0 0 1rem;
+    box-shadow: #b8b8b8 0 0 1rem; margin-top: 13px; border-radius: 5px;">
+                    <img src="static/picture/sybg.png" style="margin-top: 50px; width: 52%;" />
+                    <div class="modal-body" style="padding: 12px 59px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto;
+            margin-right: auto;">
+                            <tr>
+                                <td>
+                                    <div id="contentReport" style="">
+                                        <hr style="border-top: 1px dashed #e6e6e6;" />
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            项目特色
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <form class="form-horizontal" id="UploadForm" method="post" name="form-horizontal" enctype="multipart/form-data" action="/ReportStudent/SLabSource/UploadDate">
+                                                    <table class="tablePadding" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: #fff">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="form-group" colspan="2" style="text-align: left; font-size: 18px;padding-left:20px;">
+                                                                    &emsp;&emsp;本项目是基于我国纺织特色产业的人才需求，在新工科背景下着眼于培养应用型纺织工程专业人才，以真实生产企业为蓝本建设典型的聚丙烯熔喷非织造布生产虚拟仿真实验教学系统，实验设计思路与实际生产流程相一致，具有科学性、推演性和交互性，全面推进虚拟实验教学改革，着力培养学生的工程实践能力和创新能力，提高纺织工程专业学生的工程素养，培养纺织人的文化自信。
+                                                                    <br><br>&emsp;&emsp;本虚拟仿真教学系统结合了闽江学院应用型本科院校的办学理念和办学宗旨，制定纺织工程专业人才培养方案，采用虚实结合的教学方法，以实验教学小试实验为基础，借助现代化计算机科技，模拟真实企业中试放大生产线，将真实实验与虚拟实验相互补充，不断提升学生的实践与创新能力。结合纺织工程实验教学的特点，构建了层次结构清晰、适宜共享、易于推广的聚丙烯熔喷非织造布虚拟仿真实验教学系统。
+                                                                    <br><br>&emsp;&emsp;本熔喷非织造布虚拟仿真实验教学内容以聚丙烯非织造布完整生产工艺为主线，涵盖了生产线上的全部主要设备，仿真内容包含实验前准备、设备仿真、工艺与生产操作仿真、厂区漫游、在线考核，形成系统化知识体系，并以实景操作、故障排除、在线考核、师生互动等新颖的教学模式提高教学效果，通过持续改进构建有专业特色的虚拟仿真教学模式。
+                                                                    <br><br>&emsp;&emsp;熔喷非织造布虚拟仿真实验教学系统以“互惠互利”的方式，面向相关企业、科研院所以及兄弟院校开放，实现教学资源共享，将成为相关高校纺织工程、服装设计与工程等专业学生的虚拟实验和实习实训基地。
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- 互动答疑 -->
+                <!-- 对应项目申报书 -->
+                <div class="row" id="hddy" style="width: 1200px; margin: 0 auto; margin-bottom: 20px;
+    display: none; -webkit-box-shadow: #b8b8b8 0 0 1rem; -moz-box-shadow: #b8b8b8 0 0 1rem;
+    box-shadow: #b8b8b8 0 0 1rem; margin-top: 13px; border-radius: 5px;">
+                    <!-- <img src="picture/hddy.png" style="margin-top: 50px; width: 42%;" /> -->
+                    <div class="modal-body" style="padding: 12px 59px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto;
+            margin-right: auto;">
+                            <tr>
+                                <td>
+                                    <div id="content" style="">
+                                        <div class="row modal-body1" style="position: relative; background: white;">
+                                            <div class="renderbodyBasicPC">
+                                                <div class="row" style="position: relative; padding: 10px;">
+                                                    <div class="circleContainer">
+                                                        <div class="outCircle">
+                                                            <div class="inCircle">
+                                                            </div>
+                                                        </div>
+                                                        项目申报书
+                                                    </div>
+                                                    <iframe src="apply_book.pdf" style="width: 100%;height: 800px;" frameborder="0"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+                    <!-- 课程资料库 -->
+                    <!-- 对应教学成果 -->
+                    <div class="row" id="kczlk" style="width: 1200px; margin: 0 auto; margin-bottom: 20px;
+    display: none; -webkit-box-shadow: #b8b8b8 0 0 1rem; -moz-box-shadow: #b8b8b8 0 0 1rem;
+    box-shadow: #b8b8b8 0 0 1rem; margin-top: 13px; border-radius: 5px;">
+                        <img src="static/picture/kczlk.png" style="margin-top: 50px; width: 52%;" />
+                        <div class="modal-body" style="padding: 12px 59px;">
+                            <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto;
+            margin-right: auto;">
+                                <tr>
+                                    <td>
+                                        <div id="content" style="">
+                                            <hr style="border-top: 1px dashed #e6e6e6;" />
+                                            <div class="circleContainer" style="margin-top: 11px;">
+                                                <div class="outCircle">
+                                                    <div class="inCircle">
+                                                    </div>
+                                                </div>
+                                                承担该实验教学任务情况
+                                            </div>
+                                            <div class="textContainer" style="text-indent: 28px; padding-left: 0px;">
+                                                <span class="kczlkContent neirong">
+                                                《非织造学》是纺织工程专业学生的专业基础性课程，项目负责人柯惠珍老师长期从事该门课程的教学工作，熔喷工艺原理是《非织造学》课程的核心教学内容，实验学时为2学时。
+                                                </span>
+                                            </div>
+                                            <div class="circleContainer" style="margin-top: 11px;">
+                                                <div class="outCircle">
+                                                    <div class="inCircle">
+                                                    </div>
+                                                </div>
+                                                教学研究与教学奖励情况
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="textContainerNoIndent">
+                                                        <span class="kczlkContent neirong">
+                                        &emsp;&emsp;近5年项目负责人主持校级教改项目2项，参与国家级第二批新工科研究与实践项目1项，参与省级新工科、新农科研究与改革实践项目1项，参与省级一流本科专业建设1项，参与校级项目2项，参与校级教学团队建设1项。参与发表教改论文1篇。获得校级青年教师教学竞赛二等奖1项，参与获得校级教育教学成果特等奖1项，获得教工“领航工程”先进个人荣誉1次，获得校级本科生优秀毕业论文（设计）优秀指导教师荣誉1次。
+                                        </span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="circleContainer" style="margin-top: 11px;">
+                                                <div class="outCircle">
+                                                    <div class="inCircle">
+                                                    </div>
+                                                </div>
+                                                学术研究情况
+                                            </div>
+                                            <div class="textContainerNoIndent">
+                                                <span class="kczlkContent neirong">
+                                                    &emsp;&emsp;柯惠珍，博士，副教授，硕士生导师，福建省高层次C类人才。福建省纺织服装实验教学示范中心主任。入选2018年福建省高校杰出青年科研人才培育计划。主持和参与国家级、省级等项目30余项。发表第一和通讯作者学术论文60余篇，授权专利48项。指导大学生创新创业国家级、省级等项目7项。获得福州市自然科学优秀学术论文一等奖2项，福建省自然科学优秀学术论文三等奖1项。
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <iframe id="conframe" style="width: 100%; height: 930px;" frameborder="0" border="0" marginwidth="80" marginheight="50"></iframe>
+                    <script type="text/javascript">
+                        document.write("<script type='text/javascript' src='static/js/SLabSource.js?t=" + Math.random() +
+                            "'><\/script>");
+                    </script>
+
+
+                    <!--互动回复-->
+                    <script type="text/html" id="replyContentHtml">
+                        <li id="[ReplyLiID]" class="replyBaseContainer">
+                            <textarea class='editorClass' id="answer" name="editor" placeholder="  请输入回复内容......"></textarea>
+                            <div class="row" style="margin-top: 8px; margin-bottom: 8px; ">
+                                <input id="closeid" onmouseover="closeidOver()" onmouseout="closeidOut()" type="button" value="回复" class="btn btn-LightGreen" style="background: #4880E3;
+                                color: White; border: none; margin-top: 13px;float:right" onclick="ReplyFunction([DiscussID],'[ReceiveUserID]')" />
+                            </div>
+                            <div id="hisReply">
+
+                            </div>
+                        </li>
+                    </script>
+
+                    <script type="text/html" id="replyHisContent">
+                        <div class="replyItemContainer" id="[ReplyDiscussContainerID]">
+                            <img src="static/picture/headimg.png" class="replyUserImg" />
+                            <div class="ReplyLineContainer">
+                                <div class="ReplyFirstLine">
+                                    <div class="ReplyName">[UserID]</div>
+                                    <div class="ReplyName">[UserName]</div>
+                                    <div class="TextReply">回复</div>
+                                    <div class="ReceiveName">[ReceiveUserID]</div>
+                                    <div class="ReceiveName">[ReceiveUserName]</div>
+                                    <div class="ReplyDate">
+                                        [ReplyDate]
+                                    </div>
+                                </div>
+                                <div class="ReplySecondLine">
+                                    <div class="ReplyContent">[Content]</div>
+                                    <div class="ReplyBtnContainer ShowReplyContainer" onclick="ShowReplyToThisPersin([ReplyDiscussID],[ParentID],'[UserID]','[ParentReceiveUserID]')">
+                                        <img class="replyImgMin" src="static/picture/reply.png" />
+                                        <div class="replyBtn replyBtnText">回复</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style='border-top:1px dashed #e6e6e6;' />
+                        </div>
+                    </script>
+
+                    <script type="text/html" id="ReplyToPersonHtml">
+                        <div class="ReplyAreaContainer">
+                            <textarea class='editorClass' name="editor" placeholder="  请输入回复内容......"></textarea>
+                            <div class="row" style="margin-top: 8px; margin-bottom: 8px; ">
+                                <input id="closeid" onmouseover="closeidOver()" onmouseout="closeidOut()" type="button" value="回复" class="btn btn-LightGreen" style="background: #4880E3;
+                                                color: White; border: none; margin-top: 13px;float:right" onclick="ReplyToPersonCommit([ParentID],'[ReceiveUserID]','[ParentReceiveUserID]')" />
+                            </div>
+                        </div>
+                    </script>
+
+                    <style>
+                        /* 新增回复功能样式 */
+                        
+                        .replyContainer {
+                            float: right;
+                            font-size: 16px;
+                            margin-top: -44px;
+                            cursor: pointer;
+                        }
+                        
+                        .replyImg {
+                            display: inline-block;
+                            margin: -2px 5px 0 0 !important;
+                            width: 15px !important;
+                        }
+                        
+                        .replyBtn {
+                            display: inline-block;
+                            font-size: 16px;
+                            color: #808080;
+                        }
+                        
+                        .replyBaseContainer {
+                            padding-left: 50px;
+                            padding-right: 40px;
+                            min-height: 150px;
+                        }
+                        
+                        .ReplyName,
+                        .TextReply,
+                        .ReceiveName,
+                        .ReplyDate,
+                        .ReplyContent,
+                        .replyBtnText {
+                            font-size: 14px !important;
+                            display: inline-block !important;
+                        }
+                        
+                        .ReplyName,
+                        .ReceiveName {
+                            color: #4880E3;
+                        }
+                        
+                        .ReplyDate,
+                        .ReplyBtnContainer {
+                            float: right;
+                            color: #555555;
+                        }
+                        
+                        .ReplyBtnContainer {
+                            font-size: 14px;
+                            cursor: pointer;
+                        }
+                        
+                        .replyUserImg {
+                            display: inline-block;
+                            float: left;
+                        }
+                        
+                        .ReplyLineContainer {
+                            padding-top: 16px;
+                            display: table-cell;
+                            width: 930px;
+                            padding-left: 15px;
+                        }
+                        
+                        .ReplySecondLine {
+                            margin-top: 8px;
+                        }
+                        
+                        .replyImgMin {
+                            width: 15px !important;
+                            display: inline-block;
+                            margin-top: -3px !important;
+                        }
+                    </style>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                document.write("<script type='text/javascript' src='static/js/SlabsourceJS.js?t=" + Math.random() +
+                    "'><\/script>");
+            </script>
+
+        </div>
+        <div class="row foot" style=" color: white; padding: 10px 0; font-size: 14px; background: #4880E3; position: absolute; width: 100%;">
+
+            版权所有：闽江学院服装与艺术工程学院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 地址：福州市闽侯大学城文贤路1号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 技术支持：安徽省科大奥锐科技有限公司
+
+        </div>
+</body>
+
+</html>
+
+</html>

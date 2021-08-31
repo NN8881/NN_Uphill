@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>课程简介</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrapvalidator.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/wysiwyg-editor.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/site.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/ztree.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/pager.css" rel="stylesheet" type="text/css" />
+    <script src="static/js/jquery.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrapvalidator.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.zh-cn.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg-editor.js" type="text/javascript"></script>
+    <script src="static/js/bootbox.min.js" type="text/javascript"></script>
+    <script src="static/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+    <script src="static/js/knockout-3.4.0.js" type="text/javascript"></script>
+    <script src="static/js/jquery.page.js" type="text/javascript"></script>
+    <script src="static/js/ajaxfileupload.js" type="text/javascript"></script>
+    <script src="static/js/ichart.1.2.1.min.js" type="text/javascript"></script>
+    <script src="static/js/compatibility.js" type="text/javascript"></script>
+    <script src="static/js/pdf.js" type="text/javascript"></script>
+    <script src="static/js/jquery.raty.js" type="text/javascript"></script>
+    <script src="static/js/81af42270a0b44a8963338f04d8ce653.js" type="text/javascript"></script>
+    <script src="static/js/globlejs.js" type="text/javascript"></script>
+    <script type="text/javascript" src="static/js/md5.js"></script>
+    <script type="text/javascript" src="static/js/base64.js"></script>
+    <script type="text/javascript">
+        function goIndex() {
+            window.history.go(-1)
+        }
+    </script>
+    <style type="text/css">
+        .left-top {
+            list-style: none;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 5px;
+        }
+        
+        .left-top span {
+            font-size: 16px;
+        }
+        
+        a:hover,
+        a:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        /*图*/
+        
+        .left-box {
+            width: 52%;
+            height: 0;
+            padding-top: 26.3157%;
+            position: absolute;
+            bottom: 0;
+            left: 3%;
+            margin: auto 0;
+        }
+        
+        .foot {
+            border: none;
+        }
+    </style>
+    <style type="text/css">
+        .imglist li a img {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .imglist li {
+            border: none;
+            width: 280px;
+            height: 21px;
+            float: left;
+            cursor: pointer;
+            list-style: none;
+            margin: 5px 5px;
+        }
+        
+        .RecordBg {
+            background: url(static/images/recordbg.png) center left no-repeat;
+            width: 30px;
+            height: 30px;
+            border: 0 solid white;
+            background-size: 30px 30px;
+        }
+        
+        .RecordPlayingBg {
+            background: url(static/images/recordplayingbg.gif) center left no-repeat;
+            width: 30px;
+            height: 30px;
+            border: 0 solid white;
+            background-size: 30px 30px;
+        }
+        
+        #conframe {
+            display: none
+        }
+    </style>
+    <style>
+        #content span label {
+            font-weight: 500;
+            text-indent: 2em;
+        }
+        
+        #content img {
+            position: relative;
+            margin-top: 16px;
+        }
+        
+        .textContainer {
+            font-size: 16px;
+            text-indent: 32px;
+            line-height: 2;
+            text-align: justify;
+            text-justify: inter-ideograph;
+            padding-left: 0.3em;
+        }
+        
+        .inlineTextContainer {
+            font-size: 16px;
+            text-indent: 16px;
+            line-height: 2;
+            text-align: justify;
+            text-justify: inter-ideograph;
+            display: inline-block;
+        }
+        
+        .textContainer2 {
+            font-size: 16px;
+            line-height: 2;
+            text-align: justify;
+            text-justify: inter-ideograph;
+        }
+        
+        .contentTitle {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 7px 0;
+        }
+        
+        .topTitle {
+            text-align: left;
+            display: inline-block;
+            margin-left: 10px;
+            height: 25px;
+        }
+        
+        .outCircle {
+            background: #477fe3;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 4px;
+        }
+        
+        .inCircle {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: white;
+            margin: 4px;
+        }
+        
+        .circleContainer {
+            text-align: left;
+            height: 25px;
+            color: #477fe3;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .btnBeforeTest {
+            width: 130px;
+            height: 35px;
+            font-size: 20px;
+            border-radius: 17.5px;
+            color: white;
+            background: #477fe3;
+            border: none;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .sub {
+            vertical-align: sub;
+            font-size: 9px;
+            font-weight: 400;
+        }
+        
+        .textContainerNoIndent {
+            text-align: left;
+            font-size: 16px;
+            line-height: 2;
+        }
+        
+        .sybgBtn {
+            margin-right: 10px;
+            width: 100px;
+            font-size: 18px;
+            color: white;
+            background: #4880E3;
+            border: none;
+            height: 33px;
+            margin-top: 11px;
+        }
+        
+        .sybgBtn:hover {
+            background: #1f5f9c;
+        }
+        
+        #disdiv img {
+            width: 4%;
+        }
+        
+        #disdiv,
+        #userlist {
+            text-align: left;
+        }
+        
+        #disdiv {
+            margin-left: 10px;
+        }
+        
+        #userlist img {
+            width: 3%;
+        }
+        
+        .wysiwyg-container {
+            text-align: left;
+        }
+        
+        .wysiwyg-toolbar {
+            display: none;
+        }
+        
+        #userlist {
+            display: none;
+        }
+        
+        .renderbodyBasicPC {
+            -moz-box-shadow: 0px 0px 0px 0px #666;
+            box-shadow: 0px 0px 0px 0px #666;
+            width: 100%;
+        }
+        
+        #more {
+            color: #4880E3;
+        }
+        
+        .wysiwyg-wrapper {
+            height: 85px;
+        }
+        
+        .kczlkContent {
+            font-size: 16px;
+            padding-left: 1.2em;
+            display: inline-block;
+        }
+        
+        .kczlkContent2 {
+            font-size: 16px;
+            padding-left: 2.4em;
+        }
+        
+        .pageTable,
+        .pageTable div {
+            text-align: left;
+            font-size: 16px;
+            margin: 0 12px;
+            line-height: 2;
+        }
+        
+        .pageTable {
+            border: 1px solid #000;
+            margin: 20px 0;
+        }
+        
+        .underline {
+            display: inline-block;
+            text-decoration: underline;
+            font-size: 16px;
+            text-indent: 0;
+        }
+        
+        .xiaobiaoti {
+            font-family: Wingdings;
+            font-size: 16px;
+            line-height: 2;
+            padding-left: 0.3rem;
+        }
+        
+        .xiaobiaotitext {
+            text-indent: 16px;
+            font-size: 16px;
+            display: inline-block;
+            line-height: 2;
+            font-weight: bold;
+        }
+        
+        .append-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .append-buttons a {
+            display: inline-block;
+            border: 1px solid #007aff;
+            color: #007aff;
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 0 10px;
+            font-size: 13px;
+        }
+        
+        .nameSytle,
+        .jobSytle {
+            font-size: 18px;
+        }
+        
+        .jobSytle {
+            color: #477fe3;
+        }
+        
+        .positionStyle {
+            font-size: 14px;
+            margin: 3px 0;
+        }
+        
+        .teacherInfoContainer img {
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        
+        .teacherInfoContainer {
+            border: 1px solid #b8b8b8;
+            border-radius: 5px;
+            width: 210px;
+            padding: 10px 10px;
+            margin-right: 12px;
+            /* padding-bottom: 20px; */
+        }
+        /* .teacherInfoContainer6 {
+            margin-top: 40px;
+        } */
+        
+        .teacherInfoRow {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .teacherInfoRow1 {
+            justify-content: center;
+        }
+        
+        #xmjj {
+            margin: 0 auto;
+            margin-bottom: 20px;
+            -webkit-box-shadow: #b8b8b8 0 0 1rem;
+            -moz-box-shadow: #b8b8b8 0 0 1rem;
+            box-shadow: #b8b8b8 0 0 1rem;
+            margin-top: 13px;
+            border-radius: 5px;
+        }
+        
+        .tdCenter {
+            text-align: center !important;
+            white-space: nowrap;
+        }
+        
+        .pageTable td {
+            padding: 8px 0;
+        }
+        
+        .xuhao {
+            display: inline-block;
+            font-size: 16px;
+            float: left;
+            padding-left: 0.3em;
+        }
+        
+        .neirong {
+            display: table-cell;
+        }
+    </style>
+</head>
+
+<body>
+    <!--顶部 class="glyphicon glyphicon-user"-->
+    <div class="row" style="height: 63px;">
+        <div class="topBanner" style="width: 100%;">
+            <div class="row head" style="height: 64px;width:100%;background:url(static/images/tbbj.png) no-repeat;background-size:cover;position:relative;">
+                <div style="position:absolute;top:64px;">
+
+                    <img src="static/picture/logo.png" style="position: absolute; bottom: 10px; left: 25px; width: 540px; " />
+                    <!--  <img src="static/picture/scdx.png" style="bottom: 15px; position: absolute; left: 85px; width: 100px; " /> -->
+                    <!--  <img src="static/picture/qgkx.png" style="position: absolute; bottom: 13px; left: 195px; width: 160px;" /> -->
+                    <!-- <img src="static/picture/sg.png" style="position: absolute; bottom: 2px; left: 360px; " /> -->
+                    <!--  <img src="static/picture/zgqj.png" style="position: absolute; bottom: 12px; left: 390px; width: 240px;" /> -->
+                </div>
+
+                <div id="rightDiv" style="position: absolute; right: 44px; margin-right: 21px; color: white; top: 25px; ">
+                    <ul style="margin-top: -4px;">
+                        <li id="goIndex" style=" width: 100px; margin-left: 20px; float: left;">
+                            <a href="#" onclick="goIndex()" style="font-size:14px">
+                                <img src="static/picture/goindex.png" style=" width: 19%; margin-top: -7px;" />
+                                <span style=" position: relative;  font-size: 18px;">返回首页</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" style="width:100%">
+
+        <div class="row">
+            <img src="static/picture/headbj1.jpg" style=" position: relative; z-index: -9999; height: 100%; width: 100%;" />
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 5px;">
+        <div class="renderbodyBasicMy">
+            <div class="row topNavUl" style="display:none">
+
+                <a name="defaultpos"></a>
+                <ul class="topNav bs-docs-topnav affix-top padding10" id="source_ul">
+                    <li class="defaultli" id="first_li">
+                        <div class="row">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row contentBodyMy" style="width:100%;text-align:center;">
+
+                <div class="row" id="xmjj">
+                    <img src="static/picture/xmjj.png" style="margin-top: 50px;" />
+                    <div class="modal-body" style="padding: 12px 59px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="datatable" style="margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td>
+                                    <div id="content">
+                                        <hr style="border-top: 1px dashed #e6e6e6;margin-bottom:30px;" />
+                                        <!--团队主要成员5-->
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            团队成员
+                                        </div>
+                                        <div class="teacherInfoRow">
+                                            <div class="teacherInfoContainer">
+                                                <img src="static/picture/khz1.jpg" />
+                                                <div class="nameSytle">
+                                                    柯惠珍
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 硕士生导师
+                                                    <br>服装与艺术工程学院副教授
+                                                    <br>福建省高层次C类人才
+                                                    <br>福建省纺织服装实验教学示范中心主任
+                                                    <br>福建省新型功能性纺织纤维及材料重点实验室常务副主任
+                                                </div>
+                                                <div class="jobSytle">
+                                                    课程负责人
+                                                </div>
+                                                <div class="jobSytle">
+                                                    负责课程总体规划
+                                                </div>
+                                            </div>
+
+                                            <div class="teacherInfoContainer">
+                                                <img src="static/picture/cz2.jpg" />
+                                                <div class="nameSytle">
+                                                    陈志
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院副教授
+                                                    <br>福建省高层次C类人才
+                                                    <br>纺织工程教研室主任
+                                                </div>
+                                                <div class="jobSytle">
+                                                    实验方案策划
+                                                </div>
+                                            </div>
+
+                                            <div class="teacherInfoContainer">
+                                                <img src="static/picture/sxl3.jpg" />
+                                                <div class="nameSytle">
+                                                    宋晓蕾
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院副教授
+                                                </div>
+                                                <div class="jobSytle">
+                                                    脚本设计
+                                                </div>
+                                            </div>
+
+                                            <div class="teacherInfoContainer">
+                                                <img src="static/picture/wqf4.png" />
+                                                <div class="nameSytle">
+                                                    魏取福
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 福建省“闽江学者”讲座教授
+                                                </div>
+                                                <div class="jobSytle">
+                                                    生产流程规划
+                                                </div>
+                                            </div>
+
+                                            <div class="teacherInfoContainer">
+                                                <img src="static/picture/hql5.jpg" />
+                                                <div class="nameSytle">
+                                                    侯秋丽
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院实验师
+                                                    <br> 实验教学中心专职副主任
+                                                </div>
+                                                <div class="jobSytle">
+                                                    实验设备选型
+                                                </div>
+                                                <div class="jobSytle">
+                                                    实验参数设定
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 团队主要成员2 -->
+                                        <div class="teacherInfoRow teacherInfoRow1">
+                                            <div class="teacherInfoContainer teacherInfoContainer6">
+                                                <img src="static/picture/hj6.jpg" />
+                                                <div class="nameSytle">
+                                                    韩景
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院助理实验师
+                                                    <br>实验教学中心实验员
+                                                </div>
+                                                <div class="jobSytle">
+                                                    实验平台建设与管理
+                                                </div>
+                                            </div>
+                                            <div class="teacherInfoContainer teacherInfoContainer7">
+                                                <img src="static/picture/yt7.jpg" />
+                                                <div class="nameSytle">
+                                                    原滔
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院助理实验师
+                                                    <br>实验教学中心实验员
+                                                </div>
+                                                <div class="jobSytle">
+                                                    机房及硬件调试
+                                                </div>
+                                            </div>
+                                            <div class="teacherInfoContainer teacherInfoContainer7">
+                                                <img src="static/picture/lq8.jpg" />
+                                                <div class="nameSytle">
+                                                    李强
+                                                </div>
+                                                <div class="positionStyle">
+                                                    闽江学院 服装与艺术工程学院助理实验师
+                                                    <br>实验教学中心实验员
+                                                </div>
+                                                <div class="jobSytle">
+                                                    实验教学优化
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            课程必要性
+                                        </div>
+                                        <div class="textContainer">
+                                            熔喷非织造布生产设备都是大型产业化设备，高能耗，运行成本高，生产过程涉及到高温、高压气流以及高温熔体等危险环境，且纺丝实验操作不可逆，一旦出现误操作或设备故障，将可能导致气流温度过高或压力过大等生产问题，严重的将引起爆炸，存在严重安全隐患，因此无法在校内实验室正常生产展示。同时，从生产安全性和可靠性角度出发，学生就算进入企业开展生产实习，也不可能进入企业生产车间一线对大型产业化生产设备进行具体实践操作，无法切身地体会到真实的产品设计与工艺流程调控，难以激发学生的积极性和创造性。通过虚拟仿真实验教学系统，模拟生产过程中实际可能出现的相关问题，有利于提高学生的生产安全意识，起到提前警示教育的作用。
+                                        </div>
+                                        <div class="textContainer">
+                                            随着聚合物原料的差异，熔喷生产工艺流程会有差别，设备的性能及配置也不相同。因此，企业实际生产过程中不太容易实现生产线更换，通常都是生产单一产品。而通过虚拟仿真实验教学系统，可以快速调控主料和辅料配比以及实验工艺参数，从实验现象中很容易观察到原料选配以及实验参数对熔喷非织造布的影响，进而让学生快速并准确地把握熔喷工艺原理的专业基础知识，通过仿真生产设备拆装，锻炼学生动手操作能力，促进对学生实践能力的培养。综上所述，开展本项目实验是十分必要的。
+                                        </div>
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            课程实用性
+                                        </div>
+                                        <div class="textContainer">
+                                            本项目开发的虚拟仿真实验教学系统将免费向社会各界开放服务，包括相关企业、研究院所以及国内其他高校，实现教学资源共享。熔喷非织造布生产企业可用该系统对新职工以及实习学生进行生产培训与生产安全教育。该虚拟仿真实验教学系统将成为国内相关研究院所以及高校纺织工程、服装设计与工程等专业学生的虚拟实验和实习实训基地。此外，熔喷非织造布是组成医用防护服、口罩等重要防疫物质的核心滤材，普通大众通过该虚拟仿真实验教学系统可以了解防疫物质核心滤材的生产过程和规范，使大家对熔喷非织造布的生产加工以及防护过滤原理有一个初步的认识，增加科学常识，辨别真伪防疫用品。
+                                        </div>
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            教学设计合理性
+                                        </div>
+                                        <div class="textContainer">
+                                            本实验教学内容设计是按照真实企业生产车间的熔喷工艺流程生产线进行搭建，实验设备模型也是按照企业真实生产设备进行仿制，满足真实实验的虚拟仿真孪生环境。实验原材料选择和实验工艺参数也参照企业实际生产情况进行设置，厂区布局合理、覆盖全面，构建了效能发挥充分的体验式教学场景。由企业工程师对项目教学内容进行把脉会诊，保证了课程教学内容设计的合理性和可行性。本实验教学系统与实际生产相对接，注重科教融合、产教融合，将生产研究成果与研究过程开发转化为实验教学内容。
+                                        </div>
+                                        <div class="textContainer">
+                                            本虚拟仿真实验教学内容与理论教学内容相融合，从整体把握知识结构，科学地划分教学内容层次，找准学生认知起点，并理顺学生认知次序，使呈现的实验任务具有可操作、可监控、可检测，提高了课堂教学的有效性。仿真模型具有科学性、推演性和交互性，实验过程体现了探究知识和解决问题，有生生、师生互动的教学机制。学生进入教学系统，通过综合设计实验方案，主观选取原料并设置实验参数，观察实验现象的变化、检测并分析实验结果，进而掌握专业基础知识。本实验教学系统的实验考核包括实验操作评价、实验观察与记录评价、实验思维与创新评价、实验结果评价及实验报告评价。实验考核设计合理，实验结果有推演机制，每步实验结果都有相应的分析和有效的指导。系统能够提供实验报告的基本信息，以及根据学生的实验操作过程和实验数据生成学生实验报告和实验评价报告，实验报告由实验报告基本信息、学生实验报告、实验评价报告三部分组成。通过本实验教学系统将二维平面的生产流程图转化为三维空间的立体操控体验，激发了学生专业学习兴趣，培养了科学实验操作的基本技能，提升了学习效率，实现了学生能力结构分析，提高了学生创新和实践能力，学习效果更好。
+                                        </div>
+                                        <div class="circleContainer">
+                                            <div class="outCircle">
+                                                <div class="inCircle">
+                                                </div>
+                                            </div>
+                                            实验系统先进性
+                                        </div>
+                                        <div class="textContainer">
+                                            （1）本系统使用3D虚拟仿真技术，完成高度逼真的三维虚拟仿真场景，以及实验设备的实时交互功能，并在虚拟场景中采用第一人称视角实现漫游效果。支持windows7、windows8、windows10操作系统，支持directX加速。
+                                        </div>
+                                        <div class="textContainer">
+                                            （2）虚拟仿真实验采用组件技术设计，将仪器按照数学物理原理建模设计相对独立的组件。用户根据实验内容调用不同的仪器组件形成实验方案、开展实验步骤，体现了实验内容的高阶性，学生可以自主设计实验参加完成实验的内容，体现项目的创新性；仪器具有与物理原理相符的数学模型，可以设计拔高的实验内容，体现内容设计的挑战度。
+                                        </div>
+                                        <div class="textContainer">
+                                            （3）系统架构我们采用BS+CS混合，支持将来的大面积共享教学使用。
+                                        </div>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row foot" style=" color: white; padding: 10px 0; font-size: 14px; background: #4880E3; position: absolute; width: 100%;">
+        版权所有：闽江学院服装与艺术工程学院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 地址：福州市闽侯大学城文贤路1号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 技术支持：安徽省科大奥锐科技有限公司
+
+    </div>
+</body>
+
+</html>
