@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>仿真实验用户登录</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrapvalidator.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/wysiwyg-editor.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/site.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/ztree.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/pager.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/login.css" rel="stylesheet" type="text/css" />
+
+    <script src="static/js/jquery.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrapvalidator.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="static/js/bootstrap-datetimepicker.zh-cn.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="static/js/wysiwyg-editor.js" type="text/javascript"></script>
+    <script src="static/js/bootbox.min.js" type="text/javascript"></script>
+    <script src="static/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+    <script src="static/js/knockout-3.4.0.js" type="text/javascript"></script>
+    <script src="static/js/jquery.page.js" type="text/javascript"></script>
+    <script src="static/js/ajaxfileupload.js" type="text/javascript"></script>
+    <script src="./static/js/svgUse.js" type="text/javascript"></script>
+    <!--[if lte IE 9]>
+    <script type="text/javascript" src="static/js/html5shiv.min.js"></script>
+    <script type="text/javascript" src="static/js/html5shiv-printshiv.min.js"></script>
+    <script type="text/javascript" src="static/js/respond.min.js"></script>
+    <script type="text/javascript" src="static/js/respond.matchmedia.addlistener.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="static/js/md5.js"></script>
+    <script type="text/javascript" src="static/js/base64.js"></script>
+    <script src="static/js/globlejs.js" type="text/javascript"></script>
+    <script type="text/javascript" src="static/js/base64.js"></script>
+</head>
+
+<body>
+
+    <style>
+        .first-page {
+            display: block;
+            height: 29px;
+            width: 60px;
+            background-color: rgb(214, 208, 74);
+            border: 1px solid rgb(214, 208, 74);
+            border-radius: 10px;
+            color: #fff!important;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .basecontainer {
+            width: 100%;
+            height: 100%;
+            background: url(static/images/bgcimg.png) no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .content {
+            height: calc(100% - 64px);
+        }
+        
+        .content-box {
+            font-size: 24px;
+            color: #fff;
+            display: flex;
+        }
+        
+        .main-box {
+            margin-top: 6%;
+            width: 34%;
+            height: 100%;
+            display: inline-block;
+            float: right;
+        }
+        
+        .title {
+            width: 75% !important;
+            height: auto !important;
+            margin-bottom: 12%;
+            margin-top: 18%;
+            margin-left: -6.1%;
+        }
+        /*图*/
+        
+        .left-box {
+            width: 68%;
+            height: 100%;
+            display: inline-block;
+            overflow: hidden;
+        }
+        
+        .people-box {
+            position: relative;
+            display: flex;
+            /* margin-top: 12.5%; */
+            justify-content: space-around;
+        }
+        .peopleI {
+            position: relative;
+            width: 66%;
+            margin-top: 22%;
+            margin-left: 16%;
+        }
+        
+        .peopleI_1 {
+            position: absolute;
+            width: 192px;
+            height: 188px;
+            left: 461px;
+            top: 30px;
+        }
+        
+        .light {
+            width: 20.22%;
+            position: absolute;
+            right: 31.5%;
+            top: 27%;
+        }
+        
+        .circle-box {
+            width: 31%;
+            height: 55%;
+            position: absolute;
+            right: 8%;
+            top: -35%;
+        }
+        
+        .circle1 {
+            width: 53%;
+            position: relative;
+            left: -90%;
+            top: 87%;
+        }
+        
+        .waveC {
+            position: absolute;
+            width: 107.86%;
+            top: 2px;
+            right: -6px;
+        }
+        
+        .circle-box1 {
+            position: absolute;
+            border-radius: 50%;
+            width: 42.22%;
+            height: 50.22%;
+            top: 92.5%;
+            left: -85%;
+        }
+        
+        .circle2 {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .main-box>ul {
+            margin-top: -8%;
+            width: 60%;
+            margin-left: 11%;
+        }
+        
+        .main-box>ul>li {
+            float: left;
+            width: 36.111%;
+            padding-top: 25.3%;
+            position: relative;
+        }
+        
+        .main-box>ul>li.left-l2 {
+            margin-left: 18.35%;
+        }
+        
+        .main-box>ul>li.left-l3 {
+            margin-top: 17%;
+        }
+        
+        .main-box>ul>li.left-l4 {
+            margin-top: 21.3%;
+        }
+        
+        .main-box>ul>li.left-l5 {
+            margin-top: 21.3%;
+            margin-left: 18.35%;
+        }
+        
+        .main-box>ul>li>a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding-top: 5%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #1E5E9C;
+            text-align: center;
+            border-radius: 5px 5px;
+        }
+        
+        .bottom-box {
+            position: absolute;
+            width: 100%;
+            bottom: 2%;
+            right: 0;
+            text-align: center;
+        }
+        
+        .bottom-box>a {
+            display: inline-block;
+            width: 120px;
+            height: 40px;
+            line-height: 38px;
+            box-sizing: border-box;
+            margin-left: 30px;
+            padding-left: 17px;
+            background-color: #1E5E9C;
+            border-radius: 5px;
+            color: #fff;
+            text-align: left;
+        }
+        
+        .bottom-box>a:hover {
+            background-color: rgba(30, 94, 156, .8);
+        }
+        
+        .bottom-box>a img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        
+        .bottom-box>a span {
+            margin-left: 24px;
+        }
+        
+        .bottom-box>a.report-btn {
+            width: 132px;
+        }
+        /*视频播放*/
+        
+        .video-box {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .vjs-default-skin.vjs-big-play-centered .vjs-big-play-button {
+            margin-left: -1.5em;
+        }
+        
+        .vjs-default-skin .vjs-big-play-button {
+            width: 3em;
+            height: 3em;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+        
+        .vjs-default-skin .vjs-big-play-button:before {
+            line-height: 3em;
+        }
+        
+        .vjs-default-skin .vjs-play-progress {
+            background: #66a8cc;
+        }
+        
+        .vjs-default-skin .vjs-volume-level {
+            background: #66a8cc;
+        }
+        
+        .vjs-default-skin .vjs-slider-handle:before {
+            content: " ";
+            background: white;
+            width: 1.4em;
+            height: 1.4em;
+            margin-top: -.12em;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+        
+        .vjs-default-skin .vjs-seek-handle:before {
+            padding-top: 0;
+        }
+        
+        .vjs-default-skin .vjs-volume-handle:before {
+            width: 1em;
+            height: 1em;
+        }
+        
+        .layui-layer-page .layui-layer-title {
+            height: 34px;
+            line-height: 34px;
+        }
+        
+        .layui-layer-page .layui-layer-setwin {
+            top: 11px;
+        }
+        
+        .layui-layer.layui-layer-page {
+            margin-left: -365px;
+            margin-top: -225px;
+        }
+        
+        .layui-layer.layui-layer-page .layui-layer-content {
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .left-l6 {
+            margin-left: 18.35%;
+            margin-top: 21.3%;
+        }
+        
+        .left-l5 {
+            margin-top: 21.3%;
+            margin-left: 18.35%;
+        }
+        
+        #videoDiv a {
+            margin: 15px;
+            text-decoration: none;
+        }
+        
+        #videoDiv .video-btn:nth-child(1) {
+            margin-left: 32%
+        }
+        
+        #videoDiv .video-btn:nth-child(2) {
+            margin-left: 0px;
+        }
+        
+        #rightDiv ul li {
+            float: left;
+            width: 80px;
+            overflow: hidden;
+            height: 30px;
+        }
+        
+        #rightDiv ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        #rightDiv {
+            color: white;
+            display: inline-block;
+            float: right;
+            margin-top: 20px;
+        }
+        
+        #rightDiv1 ul li {
+            float: left;
+            width: 80px;
+            overflow: hidden;
+            height: 30px;
+        }
+        
+        #rightDiv1 ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        #rightDiv1 {
+            color: white;
+            display: inline-block;
+            float: right;
+            margin-top: 20px;
+        }
+        
+        .main-box img {
+            width: 67.68%;
+            height: 110%;
+            margin-left: 9%;
+            margin-top: -36%;
+        }
+        
+        .icon {
+            width: 4em;
+            height: 4em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            color: #0a27f2;
+            -webkit-transition: all 1.5s ease;
+            transition: all 1.5s ease;
+        }
+        
+        .icon:hover {
+            color: #fff;
+            -webkit-animation: Glow 1.5s ease infinite alternate;
+            animation: Glow 1.5s ease infinite alternate;
+        }
+        
+        span {
+            font-family: 'Audiowide';
+            text-align: center;
+            color: rgb(2, 148, 146);
+            font-size: 7em;
+            -webkit-transition: all 1.5s ease;
+            transition: all 1.5s ease;
+        }
+        /* span:hover {
+    color: #fff;
+    -webkit-animation: Glow 1.5s ease infinite alternate;
+            animation: Glow 1.5s ease infinite alternate;
+
+} */
+        
+        .left:hover span {
+            color: rgb(101, 6, 253);
+            -webkit-animation: Glow 1.5s ease infinite alternate;
+            animation: Glow 1.5s ease infinite alternate;
+        }
+        
+        .left:hover .icon {
+            color: rgb(101, 6, 253);
+            -webkit-animation: Glow 1.5s ease infinite alternate;
+            animation: Glow 1.5s ease infinite alternate;
+        }
+        
+        @-webkit-keyframes Glow {
+            from {
+                text-shadow: 0 0 10px rgb(2, 148, 146), 0 0 20px rgb(2, 148, 146), 0 0 30px rgb(2, 148, 146), 0 0 40px #4880e3, 0 0 70px #4880e3, 0 0 80px #4880e3, 0 0 100px #4880e3, 0 0 150px #4880e3;
+            }
+            to {
+                text-shadow: 0 0 5px rgb(2, 148, 146), 0 0 10px rgb(2, 148, 146), 0 0 15px rgb(2, 148, 146), 0 0 20px #4880e3, 0 0 35px #4880e3, 0 0 40px #4880e3, 0 0 50px #4880e3, 0 0 75px #4880e3;
+            }
+        }
+        
+        @keyframes Glow {
+            from {
+                text-shadow: 0 0 10px rgb(2, 148, 146), 0 0 20px rgb(2, 148, 146), 0 0 30px rgb(2, 148, 146), 0 0 40px #4880e3, 0 0 70px #4880e3, 0 0 80px #4880e3, 0 0 100px #4880e3, 0 0 150px #4880e3;
+            }
+            to {
+                text-shadow: 0 0 5px rgb(2, 148, 146), 0 0 10px rgb(2, 148, 146), 0 0 15px rgb(222, 8, 250), 0 0 20px #4880e3, 0 0 35px #4880e3, 0 0 40px #4880e3, 0 0 50px #4880e3, 0 0 75px #4880e3;
+            }
+        }
+        
+        #kqyx1:hover {
+            background: url(static/images/kqyx2.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #kqyx1 {
+            background: url(static/images/kqyx1.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #sybg1:hover {
+            background: url(static/images/sybg2.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #sybg1 {
+            background: url(static/images/sybg1.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        /*#jrsy1:hover {
+        background: url(static/images/jrsy2.png) no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #jrsy1 {
+        background: url(static/images/jrsy1.png) no-repeat;
+        background-size: 100% 100%;
+    }*/
+        
+        #syzd1:hover {
+            background: url(static/images/kqcy2.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #syzd1 {
+            background: url(static/images/kqcy1.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #kczlk1:hover {
+            background: url(static/images/kczlk2.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #kczlk1 {
+            background: url(static/images/kczlk1.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #hddy1:hover {
+            background: url(static/images/hddy2.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        #hddy1 {
+            background: url(static/images/hddy1.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .form-control {
+            border: 0px solid #ccc;
+        }
+        
+        .topContainer {
+            background: url(static/images/tbbj.png) no-repeat;
+            height: 64px;
+            background-size: cover;
+        }
+        
+        .topContainer .topImage {
+            display: inline-block;
+            height: 32px;
+        }
+        
+        .ulstyle {
+            color: white;
+            display: inline-block;
+            float: right;
+            margin-right: 25px;
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        var flag = false;
+        var height = document.documentElement.scrollHeight;
+        var body = document.getElementsByTagName('body')[0];
+
+        function setHeight() {
+            if (flag) {
+                var max_height = document.documentElement.scrollHeight;
+                if (height >= max_height) {
+                    body.style.height = max_height + "px";
+                } else {
+                    body.style.height = '100%';
+                }
+            } else {
+                flag = true;
+            }
+        }
+
+        function loadheight() {
+            var availHeight = $("html").height();
+            var bodyheight = $("body").height();
+            if (bodyheight < availHeight) {
+                var body = document.getElementsByTagName('body')[0];
+                body.style.height = availHeight + "px";
+            }
+        }
+        // $.ajax({
+        //     type: 'post',
+        //     url: _websiteName + '/Login/InitAccessCount',
+        //     data: {},
+        //     success: function(result) {
+        //         if (result.IsSuccess) {
+        //             $("#online").text(result.Data + "人");
+        //             $("#download").text(result.OtherDate + "人");
+        //             $("#access").text(result.ErrorInfo + "人");
+        //         } else {
+        //             $("#online").text("");
+        //             $("#download").text("");
+        //             $("#access").text("");
+        //         }
+        //     }
+        // }); //结束
+
+
+        function jjauto() {
+            let video = document.getElementById("videojj");
+
+            let videoPlay = video.play();
+
+            videoPlay.then(() => {
+
+                console.log('可以自动播放');
+
+            }).catch((err) => {
+
+                console.log("不允许自动播放");
+
+                video.muted = true;
+
+                video.play();
+
+            })
+        }
+
+        function ydauto() {
+            let video = document.getElementById("videoyd");
+
+            let videoPlay = video.play();
+
+            videoPlay.then(() => {
+
+                console.log('可以自动播放');
+
+            }).catch((err) => {
+
+                console.log("不允许自动播放");
+
+                video.muted = true;
+
+                video.play();
+
+            })
+        }
+
+        function closeautopaly(date) {
+            if (date == 1) {
+                document.getElementById("videojj").pause();
+            } else {
+                document.getElementById("videoyd").pause();
+            }
+        }
+    </script>
+    <!--切换用户-->
+
+    <body class="b-box" onresize="setHeight()" onload="loadheight()" style="min-width: 1385px;">
+        <div class="basecontainer">
+            <input type="hidden" id="TopNavID" />
+            <input type="hidden" id="SourceName" />
+            <input type="hidden" id="SourceUrl" />
+            <input type="hidden" id="loginStatus" />
+            <input type="text" style="display: none;" value="1" id="IsSupportNationalVirtual" />
+            <input type="text" style="display: none;" value="珍贵裘皮高值化染色工艺虚拟仿真实验" id="_nationalVirtualLabName" />
+            <div class="row head" style="height: 64px; width: 100%">
+                <div class="topContainer">
+                    <div style="float: left; width: 42%;">
+                        <img src="static/picture/logo.png" style="margin-left: 25px; height: 48px; margin-top: 8px;" class="topImage" />
+                        <!-- <img src="static/picture/scdx.png" style="margin-left: 10px; height: 34px; margin-top: 11px" class="topImage" /> -->
+                        <!-- <img src="static/picture/qgkx.png" style="margin-left: 10px; margin-top: 16px;" class="topImage" /> -->
+                        <!-- <img src="static/picture/sg.png" class="topImage" style="height: 44px; margin-top: 10px;" /> -->
+                    </div>
+                    <div id="rightDiv1" style="text-align: center; float: left; width: 28%;">
+                        <ul style="float: left;">
+                            <li id="homeIndex" onmouseover="homeIndex3()" onmouseout="homeIndex4()"><a href=" javascript:void(0)" onclick="location.reload()" class="first-page">首页</a></li>
+                            <li id="homeIndex2" style="display: none" onmouseover="changehomeIndex1()" onmouseout="changehomeIndex2()">
+                                <a href="javascript:void(0)" onclick="location.reload()">首页</a></li>
+                            <li id="introduce" style="width: 100px;">
+                                <a href="./courseIntroduction.html" class="introduce">课程简介</a></li>
+                            <li id="introduce2" style="display: none; width: 100px;" onmouseover="changeintroduce1()" onmouseout="changeintroduce2()"><a href="#" class="introduce">课程简介</a></li>
+                            <li id="evaluate2" style="display: none" onmouseover="changeColor()" onmouseout="changeColor2()">
+                                <a href="#" class="evaluate">评价</a></li>
+                            <li id="achievement" style="display: none; width: 100px;" onmouseover="changeAchievementOver()" onmouseout="    changeAchievementOut()"><a id="scoretarget" href="#" class="achievement">查看成绩</a></li>
+                            <li id="evaluate" onmouseover="evaluate3()" onmouseout="evaluate4()"><a href="#" class="evaluate" data-toggle="modal" data-target="#myModal">评价</a></li>
+                        </ul>
+                    </div>
+                    <div id="rightDiv" style="text-align: center; width: 20%; padding-left: 3%;">
+                        <ul>
+                            <li id="login" style="width: 100px; margin-left: 35%;line-height: 14px;">
+                                <a id="logintext" href="#" data-toggle="modal" data-target="#myModal">
+                                    <button style="border: 1px solid #fff;border-radius: 18px; color: #fff; background-color: #fff;height: 28px;padding: 5px 16px;">
+                                        <i style="font-style: normal;font-weight: 400;font-size: 14px; color: #4880e3;">登录</i> 
+                                    </button>
+                                    <!-- <img src="static/picture/loginimg.png" style="width: 79%;" /> -->
+                                </a>
+                            </li>
+                            <li id="getUserName" style="width: 160px; display: none; margin-right: -33px;">
+                                <a id="loginUserName" href="#" style="position: relative; right: 10px;"></a>
+                            </li>
+                            <li id="signOut" style="width: 80px; display: none; margin-left: 20px; height: 37px;
+                            margin-top: -2px;">
+                                <a href="#" onclick="isSignOut()">
+                                    <button style="border: 0;border-radius: 10px; color: #fff; background-color: #4880e3;height: 30px;">登录</button>
+                                    <!-- <img src="static/picture/signoutimg.png" style="width: 95%;" /> -->
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="content-box">
+                    <div class="left-box">
+                        <div class="people-box">
+                            <img class="peopleI" src="./static/picture/haha.png" alt="" />
+                            <img class="light" src="./static/picture/haha1.png" alt="" />
+                        </div>
+                        <div class="circle-box">
+                            <img class="circle1" src="./static/picture/haha2.png" alt="" />
+                            <!-- <img class="waveC" src="/static/images/Gif.gif" alt="" /> -->
+                            <div class="circle-box1">
+                                <img class="waveC" src="./static/images/Gif.gif" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">
+                            <img src="./static/picture/titlebj.png" style="width: 100%; height: auto;" />
+                        </div>
+                        <ul>
+                            <li class="left left-l1">
+                                <a href="./chilren.html?part=1" style="text-decoration: none;">
+                                    <img src="./static/picture/kqyx.png" style="height: 75px;">
+                                    <br><span class="span1" style="font-size: 16px;margin-left: 8px;">课前预习</span>
+                                </a>
+                                <!-- <a href="#" style="display: none" id="kqyx2">
+                                    <img id="kqyx1" class="kqyx2" src="static/picture/tm.png" style="display: none" />
+                                </a> -->
+                            </li>
+                            <li class="left left-l2">
+                                <a href="./chilren.html?part=2" style="text-decoration: none;">
+                                    <img src="./static/picture/syzd.png" style="height: 75px;">
+                                    <br><span class="span2" style="font-size: 16px;margin-left: 8px;">实验指导</span>
+                                </a>
+                                <!-- <a href="#">
+                                    <img id="syzd1" src="static/picture/tm.png" data-toggle="modal"
+                                        data-target="#myModal" />
+                                </a>
+                                <a href="#" style="display: none" id="syzd2">
+                                    <img id="syzd1" class="syzd2" src="static/picture/tm.png" style="display: none" />
+                                </a> -->
+                            </li>
+                            <li class="left left-l3">
+                                <a href="./chilren.html?part=3" style="text-decoration: none;margin-top: 16px;">
+                                    <!-- <img id="jrsy1" src="static/picture/jrsy.png"  style="width: 90.23px; height: auto;" /> -->
+                                    <img src="./static/picture/jrsy.png" style="height: 75px;">
+                                    <br><span class="span3" style="font-size: 16px;margin-left: 8px;">进入实验</span>
+                                </a>
+                                <!-- <a href="#">
+                                    <img id="jrsy1" src="static/picture/jrsy.png" data-toggle="modal"
+                                        data-target="#myModal" style="width: 90.23%; height: 149.64%;" />
+                                </a>
+                                <a id="jrsy2" href="#" style="display: none">
+                                    <img id="jrsy1" class="jrsy2" src="static/picture/jrsy.png" style="display: none;
+                                width: 90.23%; height: 149.64%;" />
+                                </a> -->
+
+                            </li>
+                            <li class="left left-l6">
+                                <a href="./chilren.html?part=4" style="text-decoration: none;">
+                                    <!-- <img id="sybg1" src="static/picture/tm.png"  style="width: 80%;"/> -->
+                                    <img src="./static/picture/jxts.png" style="height: 75px;">
+                                    <br><span class="span6" style="font-size: 16px;margin-left: 8px;">教学特色</span>
+                                </a>
+                                <!-- <a href="#">
+                                    <img id="sybg1" src="static/picture/tm.png" data-toggle="modal"
+                                        data-target="#myModal" />
+                                </a>
+                                <a href="#" style="display: none" id="sybg2">
+                                    <img id="sybg1" class="sybg2" src="static/picture/tm.png" style="display: none" />
+                                </a> -->
+                            </li>
+                            <li class="left left-l4">
+                                <a href="./chilren.html?part=5" style="text-decoration: none;">
+                                    <!-- <img id="kczlk1" src="static/picture/tm.png" style="width: 100%;"/> -->
+                                    <img src="./static/picture/jxcg.png" style="height: 75px;">
+                                    <br><span class="span4" style="font-size: 16px;margin-left: 8px;">教学成果</span>
+                                </a>
+                                <!-- <a href="#">
+                                    <img id="kczlk1" src="static/picture/tm.png" style="width: 81.9%;"
+                                        data-toggle="modal" data-target="#myModal" />
+                                </a>
+                                <a href="#" style="display: none" id="kczlk2" onclick="">
+                                    <img id="kczlk1" class="kczlk2" src="static/picture/tm.png" style="width: 81.9%;
+                                display: none;" />
+                                </a> -->
+                            </li>
+                            <li class="left left-l5">
+                                <a href="./chilren.html?part=6" style="text-decoration: none;">
+                                    <!-- <img id="hddy1" src="static/picture/tm.png" style="width: 92%;" /> -->
+                                    <img src="./static/picture/xmsbs.png" style="height: 75px;">
+                                    <br><span class="span6" style="font-size: 16px;margin-left: 8px;">项目申报书</span>
+                                </a>
+                                <!-- <a href="#">
+                                    <img id="hddy1" src="static/picture/tm.png" data-toggle="modal"
+                                        data-target="#myModal" />
+                                </a>
+                                <a href="#" style="display: none" id="hddy2">
+                                    <img id="hddy1" class="hddy2" src="static/picture/tm.png" style="display: none" />
+                                </a> -->
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="videoDiv" style="width: 90%;  margin-top: 0%; padding-bottom: 25px;">
+                    <a href="#" class="video-btn" id="" data-toggle="modal" data-target="#jjsp1" onclick="jjauto()">
+                        <img src="static/picture/jjsp1.png" style="width: 110px" />
+                    </a>
+                    <a href="#" class="video-btn" id="" data-toggle="modal" data-target="#ydsp1" onclick="ydauto()">
+                        <img src="static/picture/ydsp1.png" style="width: 110px" />
+                    </a>
+                    <a href="#" id="" style='display:none;'>
+                        <img src="static/picture/sbsxz1.png" style="width: 110px" />
+                    </a>
+                    <!-- <span style="position:relative;">
+                    <span style="position: absolute; top: -450%; text-align: center; right: 63px;">
+                        <span>
+                            <span style="font-size:16px;color:black;display:block;text-align:left;color:#6394F7;">
+                                在线教学服务：028-85405508
+                            </span>
+                            <span style="font-size:16px;color:black;display:block;color:#6394F7;">
+                                技术支持服务：0551-65355947
+                            </span>
+                        </span>
+                    </span>
+                    <span>
+                        <span style="font-size:14px;color:black;margin-left:160px;">当前在线实验</span>
+                        <span id="online" style="font-size:14px;color:#428bca"></span>
+                        <span style="font-size:14px;color:black">，共有</span>
+                        <span id="download" style="font-size:14px;color:#428bca"></span>
+                        <span style="font-size:14px;color:black">学习，共有</span>
+                        <span id="access" style="font-size:14px;color:#428bca"></span>
+                        <span style="font-size:14px;color:black">访问</span>
+                    </span>
+                </span> -->
+                </div>
+
+                <!-- 模态框（登录） -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: hidden;">
+                    <div class="modal-dialog" style="display: block; height: 540px; position: fixed;
+                    top: 0; left: 0; right: 0; bottom: 0; margin: auto; overflow: hidden;">
+                        <div class="modal-content" style="width: 60%; margin-top: 47px; border-radius: 0px;
+                        margin-left: 113px; background: url(static/images/loginbj2.png) no-repeat;
+                        background-size: 100% 100%; box-shadow: 0 0px 0px rgba(0,0,0,0.0); border: 0px;">
+                            <div class="modal-body" style="width: 100%;">
+                                <div class="modal-header" style="border-bottom: 0px solid #e5e5e5; text-align: center;">
+                                    <label class="modal-title" id="TempleteModalLabel" style="margin: 0; line-height: 0;
+                                    font-size: 24px; color: white; font-weight: 200;">
+                                    用户登录
+                                </label>
+                                    <a href="#" id="closeLogin" data-dismiss="modal">
+                                        <img class="closeImg" src="static/picture/close.png" style="position: absolute; right: 13px;
+                                        top: 13px;" />
+                                    </a>
+                                </div>
+                                <div class="row form-group text-center" style="margin-left: -5px; width: 100%; margin-top: 32px;">
+                                    <div class="col-md-12">
+                                        <input type="text" style="height: 41px; width: 86%; margin-top: 0px; margin-left: 10px;
+                                        background: url(static/images/user.png) no-repeat 5%; background-color: white;
+                                        background-size: 18px 20px;" class="form-control user" placeholder="      请输入用户名" id="userName" name="userName" tabindex="1" />
+                                    </div>
+                                </div>
+                                <div class="row form-group text-center">
+                                    <div class="col-md-12">
+                                        <input type="password" style="height: 41px; width: 86%; background: url(static/images/pwd.png) no-repeat 5%;
+                                        background-color: white; background-size: 18px 20px; margin-top: -5px;" class="form-control password" placeholder="      请输入密码" id="userPass" name="password" onkeypress="if(event.keyCode==13) {loginClick();}" tabindex="2"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="row form-group text-center">
+                                    <div class="col-md-12" id="yzmk">
+                                        <input type="text" id="checkCode" maxlength="4" class="form-control password" style="width: 167px;
+                                        background: url(static/images/yzm.png) no-repeat 7%; background-color: white;
+                                        background-size: 18px 20px; height: 39px; margin-top: -6px; right: 11px; position: relative;" placeholder="      请输入验证码" tabindex="3" onkeypress="if(event.keyCode==13) {loginClick();}" tabindex="3" />
+                                        <a href="#">
+                                            <img id="imgCheckCode" alt="点击刷新" src="static/picture/checkcode.ashx" onclick="javascript: this.src = '/CheckCode.ashx?Flag=DengLu&aa=' + Math.random();" width="69" height="25" style="vertical-align: middle; height: 35px; position: relative;
+                                            top: -3px; right: -10px;" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row form-group text-center">
+                                    <div class="col-12">
+                                        <button class="login_but" onclick="loginClick()" style="background: #588BF6; margin-top: 4px;
+                                        width: 260px; height: 37px; line-height: 37px;">
+                                        登&nbsp;录
+                                    </button>
+                                        <br />
+                                        <button class="login_but" onclick="location='../Login/VisitorsUserLogin'" style="background: #588BF6;
+                                        margin-top: 14px; width: 260px; height: 37px; line-height: 37px;">
+                                        专&nbsp;家&nbsp;登&nbsp;录
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+
+                <!-- 模态框（简介视频） -->
+                <div class="modal fade" id="jjsp1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: hidden;" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" style="display: block; height: 640px; position: fixed; width:900px;
+                    top: 0; left: 0; right: 0; bottom: 0; margin: auto; overflow: hidden;">
+                        <div class="modal-content" style="width: 100%; margin-top: 47px; border-radius: 0px;
+                        box-shadow: 0 0px 0px rgba(0,0,0,0.0); border: 0px;">
+                            <div class="modal-body" style="width: 100%; padding: 5px 0px 0px 0px;">
+                                <div class="modal-header" style="border-bottom: 0px solid #e5e5e5; text-align: center;
+                                padding: 0px;">
+                                    <label class="modal-title" id="TempleteModalLabel" style="margin: 0; line-height: 0;
+                                    font-size: 14px; color: black; text-align: left; height: 15px; width: 100%; margin-left: 10px;
+                                    font-weight: 100;">
+                                    熔喷工艺原理及聚丙烯非织造布生产虚拟仿真实验简介视频
+                                </label>
+                                    <a href="#" id="closeLogin" data-dismiss="modal">
+                                        <img class="closeImg" src="static/picture/close2.png" style="position: absolute;
+                                        right: 6px; top: 6px;" onclick="closeautopaly(1)" />
+                                    </a>
+                                </div>
+                                <div style="height: 500px;">
+                                    <video id="videojj" controls="controls" style="width: 100%; height:500px;">
+                                    <source src="/Upload/jj.mp4" type="video/mp4" />
+                                </video>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+
+                <!-- 模态框（引导视频） -->
+                <div class="modal fade" id="ydsp1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: hidden;" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" style="display: block; height: 640px; position: fixed; width:900px;
+                    top: 0; left: 0; right: 0; bottom: 0; margin: auto; overflow: hidden;">
+                        <div class="modal-content" style="width: 100%; margin-top: 47px; border-radius: 0px;
+                        box-shadow: 0 0px 0px rgba(0,0,0,0.0); border: 0px;">
+                            <div class="modal-body" style="width: 100%; padding: 5px 0px 0px 0px;">
+                                <div class="modal-header" style="border-bottom: 0px solid #e5e5e5; text-align: center;
+                                padding: 0px;">
+                                    <label class="modal-title" id="TempleteModalLabel" style="margin: 0; line-height: 0;
+                                    font-size: 14px; color: black; text-align: left; height: 15px; width: 100%; margin-left: 10px;
+                                    font-weight: 100;">
+                                    熔喷工艺原理及聚丙烯非织造布生产虚拟仿真实验引导视频
+                                </label>
+                                    <a href="#" id="closeLogin" data-dismiss="modal">
+                                        <img class="closeImg" src="static/picture/close2.png" style="position: absolute;
+                                        right: 6px; top: 6px;" onclick="closeautopaly(2)" />
+                                    </a>
+                                </div>
+                                <div style="height: 500px;">
+                                    <video id="videoyd" controls="controls" style="width: 100%;height: 500px;">
+                                    <source src="/Upload/yd.mp4" type="video/mp4" />
+                                </video>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            document.write("<script type='text/javascript' src='" + _websiteName + "/Scripts/APP/LoginJS.js?t=" + Math.random() + "'><\/script>");
+        </script>
+
+    </body>
+
+</html>
